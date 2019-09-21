@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Vendor } from 'src/app/model/vendor';
+//import { Vendor } from 'src/app/model/vendor';
 
-import { SalesListSearchModel } from 'src/app/model/SalesListSearchModel';
-import { SalesList } from 'src/app/model/saleslist';
+import { SalesListSearchModel } from 'app/components/model/SalesListSearchModel';
+import { Vendor } from 'app/components/model/vendor';
+import { SalesList } from 'app/components/model/saleslist';
+//import { SalesList } from 'src/app/model/saleslist';
 
 @Component({
   selector: 'app-sales-list',
