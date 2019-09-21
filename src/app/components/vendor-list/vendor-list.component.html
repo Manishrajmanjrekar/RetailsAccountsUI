@@ -1,0 +1,30 @@
+<div class="jumbotron">
+  <div class="container">
+    <h3>
+      Vendor List
+    </h3>
+    <br/>
+
+    <form [formGroup]="searchForm" (ngSubmit)="performSearch()">
+      <div class="row">
+        <div class="col-md-6">  
+         
+          <div class="form-group">
+            <input type="text" formControlName="vendorName" placeholder="Vendor Name" class="form-control" 
+             [ngClass]="{ 'is-invalid': submitted && f.vendorName.errors }" />
+            <div *ngIf="submitted && f.vendorName.errors" class="invalid-feedback">
+                <div *ngIf="f.vendorName.errors.required">Vendor Name is required</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="submit" class="btn btn-primary" value="Search"/>
+          </div>
+        </div>
+      </div>
+    </form>
+    <br/>
+
+    <app-generic-table [dataSource]="dataSource" [displayColInfo]="displayColInfo">
+    </app-generic-table>
+  </div>
+</div>

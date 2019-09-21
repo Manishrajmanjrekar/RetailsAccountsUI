@@ -1,0 +1,46 @@
+<div class="jumbotron">
+  <div class="container">
+      <div class="row">
+          <div class="col-md-6 offset-md-3">
+              <h3>StockIn</h3>
+              <form [formGroup]="stockinForm" (ngSubmit)="onSubmit()">
+                  <div class="form-group">
+                      <!--<label>Vendor</label>-->
+                      <select formControlName="vendor" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.vendor.errors }">
+                        <option value="" selected >-- Select Vendor --</option>
+                        <option *ngFor="let item of vendorList" [value]="item.id" >{{item.name}}</option>
+                      </select>
+                      <div *ngIf="submitted && f.vendor.errors" class="invalid-feedback">
+                          <div *ngIf="f.vendor.errors.required">Vendor is required</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <!--<label>Simple Name</label>-->
+                      <input type="text" formControlName="simpleName" placeholder="Simple Name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.simpleName.errors }" />
+                      <div *ngIf="submitted && f.simpleName.errors" class="invalid-feedback">
+                          <div *ngIf="f.simpleName.errors.required">Simple Name is required</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <!--<label>Created Date</label>-->
+                    <input type="date" onfocus="(this.type='date')" onblur="(this.type='text')" formControlName="createdDate" placeholder="Created Date"class="form-control" [ngClass]="{ 'is-invalid': submitted && f.createdDate.errors }" />
+                    <div *ngIf="submitted && f.createdDate.errors" class="invalid-feedback">
+                        <div *ngIf="f.createdDate.errors.required">Created Date is required</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <!--<label>Total Count</label>-->
+                    <input type="number" formControlName="totalCount" placeholder="Total Count" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.totalCount.errors }" />
+                    <div *ngIf="submitted && f.totalCount.errors" class="invalid-feedback">
+                        <div *ngIf="f.totalCount.errors.required">Total Count is required</div>
+                        <div *ngIf="f.totalCount.errors.min">Invalid Total Count</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary">Submit</button>
+                </div>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>

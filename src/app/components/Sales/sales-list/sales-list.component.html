@@ -1,0 +1,49 @@
+<p>
+  sales-list works!
+  
+</p>
+<div>
+  Search Data 
+  <div>
+  <input type="text" id="txtsearch" name="txtsearch" [(ngModel)]="searchData" /> 
+  <div>
+    {{searchData}}
+  </div>
+  </div>
+<div>
+  <button type="button" id="btnclear" (click)="clearData()" >clear</button>
+</div>
+  <div>
+    List of vendor Names
+    <div>
+       <select id="test" name ="test" [(ngModel)]="vendorId" (change)="vendorChangeEvent()" >
+         
+         <option  *ngFor="let v of vendorList" value={{v.Id}} >
+            {{v.Name}}
+         </option>
+         </select>
+         <div>{{vendorId}}</div>
+    </div>
+  </div>
+
+  <div>
+    list of Sales 
+    <!-- <div >
+     <table class="table table-bordered">
+       <tr>
+         <th *ngFor="let item of salesColumns">          
+         {{item}}
+        </th>
+      </tr>
+      <tr *ngFor="let item of gridData">
+          <td *ngFor="let col of salesColumns">
+            {{item[col]}}
+          </td>
+        </tr> 
+     </table>
+    </div> -->
+  </div>
+
+  <app-generic-table [dataSource]="gridData" [displayColInfo]="displayColInfo">
+    </app-generic-table>
+</div>

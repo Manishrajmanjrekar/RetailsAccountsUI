@@ -1,0 +1,64 @@
+<div class="jumbotron">
+  <div class="container">
+      <div class="row">
+          <div class="col-md-6 offset-md-3">
+              <h3>Add Vendor</h3>
+              <form [formGroup]="vendorForm" (ngSubmit)="onSubmit()">                 
+                <div class="form-group">
+                  <!--<label>Name</label>-->
+                  <input type="text" formControlName="name" placeholder="Name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+                  <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                      <div *ngIf="f.name.errors.required">Name is required</div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <!--<label>Address</label>-->
+                  <input type="text" formControlName="address" placeholder="Address" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.address.errors }" />
+                  <div *ngIf="submitted && f.address.errors" class="invalid-feedback">
+                      <div *ngIf="f.address.errors.required">Address is required</div>
+                  </div>
+                </div>
+                  
+                <div class="form-group">
+                  <!--<label>City</label>-->
+                  <input type="text" formControlName="city" placeholder="City" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.city.errors }" />
+                  <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
+                      <div *ngIf="f.city.errors.required">City is required</div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <!--<label>Referred By</label>-->
+                  <input type="text" formControlName="referredBy" placeholder="Referred By" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.referredBy.errors }" />
+                  <div *ngIf="submitted && f.referredBy.errors" class="invalid-feedback">
+                      <div *ngIf="f.referredBy.errors.required">Referred By is required</div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <!--<label>Mobile Number</label>-->
+                  <input type="text" formControlName="mobile" placeholder="Mobile Number" maxlength="10"  class="form-control" [ngClass]="{ 'is-invalid': submitted && f.mobile.errors }" />
+                  <div *ngIf="submitted && f.mobile.errors" class="invalid-feedback">
+                      <div *ngIf="f.mobile.errors.required">Mobile Number is required</div>
+                      <div *ngIf="f.mobile.errors.pattern">Invalid Mobile Number</div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <!--<label>Alternate Mobile Number</label>-->
+                  <input type="text" formControlName="alternateMobile" placeholder="Alternate Mobile Number" maxlength="10" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.alternateMobile.errors }" />
+                  <div *ngIf="submitted && f.alternateMobile.errors" class="invalid-feedback">
+                      <div *ngIf="f.alternateMobile.errors.required">Alternate Mobile Number is required</div>
+                      <div *ngIf="f.alternateMobile.errors.pattern">Invalid Alternate Mobile Number</div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                    <button class="btn btn-primary">Submit</button>
+                </div>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>

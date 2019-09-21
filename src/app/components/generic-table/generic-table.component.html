@@ -1,0 +1,28 @@
+
+<ng-container *ngIf="dataSource?.length > 0; then dataPanel; else nodataPanel">
+</ng-container>
+
+<ng-template #nodataPanel>
+  <div>
+    No records found.
+  </div>
+</ng-template>
+
+<ng-template #dataPanel>
+    <table border="1" cellpadding="5">  
+        <thead>
+          <tr>
+            <th *ngFor="let col of displayColInfo">
+              {{col.header}}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of dataSource">
+          <td *ngFor="let col of displayColInfo">
+            {{item[col.field]}}
+          </td>
+        </tr>
+      </table>
+</ng-template>
+

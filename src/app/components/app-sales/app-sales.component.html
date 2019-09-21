@@ -1,0 +1,37 @@
+<form  #f="ngForm">
+  <div class="container">
+  <div class="row">
+    
+      <div class="col-sm">
+          <select [(ngModel)]="vendorname" name="somename">
+            <option *ngFor="let item of sales.vendorNames" [value]="item.id" >{{item.name}}</option>
+          </select>
+         
+       </div>
+       <div class="col-sm">
+           <input type="number" name="Price"
+                  placeholder="Price" (blur)="calculate($event.target.name, $event.currentTarget.value)"
+               [(ngModel)]="sales.Price"   class="form-control">
+       </div>
+       <div class="col-sm">
+           <input type="number" name="Quantity"
+              (blur)="calculate($event.target.name, $event.currentTarget.value)"   placeholder="Quantity"
+             [(ngModel)]="sales.Quantity"     class="form-control" >
+               
+       </div>
+       <div class="col-sm">
+           <input type="number" name="Total"
+              (blur)="calculate($event.target.name, $event.currentTarget.value)"   [(ngModel)]="sales.Total" placeholder="total"
+                  class="form-control" >
+               
+       </div>
+       <div class="col-sm">
+           <button type="submit" class="btn btn-primary"
+                 (click)="save()" > Save</button>
+           <button type="button" class="btn btn-default"
+                 (click)="removeObject()" > Remove</button>
+                    <p> {{f.value|json}}</p>
+       </div>
+     </div>
+  </div>
+</form>
