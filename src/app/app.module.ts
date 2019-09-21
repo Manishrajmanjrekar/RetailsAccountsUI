@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
-
+import { HttpClientModule } from  '@angular/common/http';
 
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
@@ -22,6 +22,16 @@ import {
   AgmCoreModule
 } from '@agm/core';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { VendorComponent } from './components/vendor/vendor.component';
+import { StockinComponent } from './components/stockin/stockin.component';
+import { VendorListComponent } from './components/vendor-list/vendor-list.component';
+import { GenericTableComponent } from './components/generic-table/generic-table.component';
+import { CustomerListComponent } from './components/customer-list/customer-list.component';
+import { StockinListComponent } from './components/stockin-list/stockin-list.component';
+import { SalesListComponent } from './components/Sales/sales-list/sales-list.component';
+import { SalesEditComponent } from './components/Sales/sales-edit/sales-edit.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppSalesComponent } from './components/app-sales/app-sales.component';
 
 @NgModule({
   imports: [
@@ -32,6 +42,13 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
     ComponentsModule,
     RouterModule,
     AppRoutingModule,
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+   
+    HttpClientModule,
     AgmCoreModule.forRoot({
       apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
     })
@@ -39,9 +56,18 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
   declarations: [
     AppComponent,
     AdminLayoutComponent,
+    VendorComponent,
+    StockinComponent,
+    VendorListComponent,
+    GenericTableComponent,
+    CustomerListComponent,
+    StockinListComponent,
+    SalesListComponent,
+    SalesEditComponent
 
   ],
   providers: [],
   bootstrap: [AppComponent]
+ // entryComponents : [AppSalesComponent]
 })
 export class AppModule { }
