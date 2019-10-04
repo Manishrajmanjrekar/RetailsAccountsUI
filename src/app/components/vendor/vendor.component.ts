@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-vendor',
@@ -13,7 +14,7 @@ export class VendorComponent implements OnInit {
 
   mobilePattern = "^[6-9][0-9]{9}$";
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder,private httpClient: HttpClient) { }
 
   ngOnInit() {
     this.vendorForm = this.formBuilder.group({
@@ -24,8 +25,15 @@ export class VendorComponent implements OnInit {
       mobile: ['', [Validators.required, Validators.pattern(this.mobilePattern)]],
       alternateMobile: ['', [Validators.pattern(this.mobilePattern)]],
     });
-  }
+    this.getContacts();
 
+   
+  }
+  public getContacts(){
+    var obj = this.httpClient.get<string[]>("http://localhost:54436/api/Values");
+    console.log(obj[0]);
+    alert(obj);
+}
   // convenience getter for easy access to form fields
  get f() { return this.vendorForm.controls; }
 
@@ -35,6 +43,8 @@ export class VendorComponent implements OnInit {
   // stop here if form is invalid
   if (this.vendorForm.invalid) {
       return;
+
+
   }
 
   alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.vendorForm.value))
