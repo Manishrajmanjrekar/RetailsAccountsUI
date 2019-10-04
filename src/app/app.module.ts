@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
-import { HttpClientModule } from  '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
@@ -22,7 +22,7 @@ import {
   AgmCoreModule
 } from '@agm/core';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
-import { VendorComponent } from './components/vendor/vendor.component';
+// import { VendorComponent } from './components/vendor/vendor.component';
 import { StockinComponent } from './components/stockin/stockin.component';
 import { VendorListComponent } from './components/vendor-list/vendor-list.component';
 import { GenericTableComponent } from './components/generic-table/generic-table.component';
@@ -47,7 +47,6 @@ import { AppSalesComponent } from './components/app-sales/app-sales.component';
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-   
     HttpClientModule,
     AgmCoreModule.forRoot({
       apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
@@ -56,7 +55,7 @@ import { AppSalesComponent } from './components/app-sales/app-sales.component';
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    VendorComponent,
+    // VendorComponent,
     StockinComponent,
     VendorListComponent,
     GenericTableComponent,
