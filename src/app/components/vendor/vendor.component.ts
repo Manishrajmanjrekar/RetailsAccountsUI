@@ -50,9 +50,9 @@ export class VendorComponent implements OnInit
   public getContacts(){
     
 
-    // this.httpClient.get('http://localhost:54436/api/Vendor').subscribe(data => {
-    //   console.log(data);
-    // });
+    this.httpClient.get('http://localhost:54436/api/Vendor').subscribe(data => {
+      console.log(data);
+    });
   }
 
   // convenience getter for easy access to form fields
