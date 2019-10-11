@@ -1,4 +1,4 @@
-export class VendorsModel
+export class CustomerModel
 {
     firstName:string;
     middleName:string;
@@ -12,6 +12,7 @@ export class VendorsModel
     referredBy:string;
     alternateMobile:string;
     email:string;
-    //officePhone:string;
+    shopName:string;
+    shopAddress:string
    
   }

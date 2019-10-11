@@ -32,6 +32,9 @@ import { SalesListComponent } from './components/Sales/sales-list/sales-list.com
 import { SalesEditComponent } from './components/Sales/sales-edit/sales-edit.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppSalesComponent } from './components/app-sales/app-sales.component';
+import { VendorService } from 'Services/vendor.service';
+import { CustomerService } from 'Services/customer.service';
+import { MatAutocompleteModule } from '@angular/material';
 
 @NgModule({
   imports: [
@@ -48,6 +51,7 @@ import { AppSalesComponent } from './components/app-sales/app-sales.component';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    MatAutocompleteModule,
     AgmCoreModule.forRoot({
       apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
     })
@@ -56,16 +60,16 @@ import { AppSalesComponent } from './components/app-sales/app-sales.component';
     AppComponent,
     AdminLayoutComponent,
     // VendorComponent,
-    StockinComponent,
-    VendorListComponent,
-    GenericTableComponent,
-    CustomerListComponent,
-    StockinListComponent,
-    SalesListComponent,
-    SalesEditComponent
+   // StockinComponent,
+    // VendorListComponent,
+    // GenericTableComponent,
+    // CustomerListComponent,
+    // StockinListComponent,
+    // SalesListComponent,
+    // SalesEditComponent
 
   ],
-  providers: [],
+  providers: [VendorService,CustomerService],
   bootstrap: [AppComponent]
  // entryComponents : [AppSalesComponent]
 })

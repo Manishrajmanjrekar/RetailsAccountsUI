@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {Observable} from 'rxjs';
+import {startWith, map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-stockin',
@@ -11,6 +13,8 @@ export class StockinComponent implements OnInit {
   stockinForm: FormGroup;
   submitted = false;
   vendorList: any;
+  options: string[] = ['One', 'Two', 'Three','sdf','ee','aa','bb','cc','ff','gg','hh'];
+  filteredOptions: Observable<string[]>;
 
   constructor(private formBuilder: FormBuilder) { }
 
@@ -20,6 +24,12 @@ export class StockinComponent implements OnInit {
       {id:10,name:"vendor1"},
       {id:11,name:"vendor2"} 
     ];
+
+    // this.filteredOptions = this.stockinForm.valueChanges
+    //   .pipe(
+    //     startWith(''),
+    //     map(value => this._filter(value))
+    //   );
 
     this.stockinForm = this.formBuilder.group({
       vendor: ['',Validators.required,],
@@ -32,6 +42,12 @@ export class StockinComponent implements OnInit {
  // convenience getter for easy access to form fields
  get f() { return this.stockinForm.controls; }
 
+// private _filter(value: string): string[] {
+//     const filterValue = value.toLowerCase();
+
+//     return this.options.filter(option => option.toLowerCase().includes(filterValue));
+//   }
+
  onSubmit() {
   this.submitted = true;
   console.log('submitted true now.....')
@@ -42,4 +58,5 @@ export class StockinComponent implements OnInit {
 
   alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.stockinForm.value))
  }
+
 }

@@ -12,15 +12,21 @@ import { MapsComponent } from '../../maps/maps.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
  import { VendorComponent } from './../../components/vendor/vendor.component';
-
+ import { CustomerInfoComponent } from 'app/components/customer-info/customer-info.component';
+ import { StockinComponent } from 'app/components/stockin/stockin.component';
+ 
 import {
   MatButtonModule,
   MatInputModule,
   MatRippleModule,
   MatFormFieldModule,
   MatTooltipModule,
-  MatSelectModule
+  MatSelectModule,
+  MatAutocompleteModule,
+  
 } from '@angular/material';
+
+
 @NgModule({
   imports: [
     CommonModule,
@@ -33,6 +39,7 @@ import {
     MatInputModule,
     MatSelectModule,
     MatTooltipModule,
+    MatAutocompleteModule
   ],
   declarations: [
     DashboardComponent,
@@ -43,7 +50,9 @@ import {
     MapsComponent,
     NotificationsComponent,
     UpgradeComponent,
-    VendorComponent
+    VendorComponent,
+    CustomerInfoComponent,
+    StockinComponent
   ]
 })
 
