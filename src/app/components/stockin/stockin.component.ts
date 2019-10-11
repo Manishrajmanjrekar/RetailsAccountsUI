@@ -16,8 +16,7 @@ export class StockinComponent implements OnInit {
   options: string[] = ['One', 'Two', 'Three','sdf','ee','aa','bb','cc','ff','gg','hh'];
   filteredOptions: Observable<string[]>;
   vendorAutoComplete = new FormControl();
-  filteredOrderServices: Observable<string[]>;
-  filteredOrderItems: Observable<string[]>;
+
 
   constructor(private formBuilder: FormBuilder) { }
 
