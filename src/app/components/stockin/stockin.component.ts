@@ -123,7 +123,7 @@ export class StockinComponent implements OnInit {
 
   SelectedOption(value) {
     console.log('SelectedOption----' + value);
-    this.stockinForm.controls['simpleName'] = value;
+    this.stockinForm.controls['simpleName'].setValue(value);
   }
 
 }
