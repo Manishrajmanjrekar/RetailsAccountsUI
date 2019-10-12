@@ -102,4 +102,19 @@ export class VendorService {
           })
         ))
   }
+
+  public checkIsDuplicateNickName(data: string, url: string): any {
+    console.log(this.APIEndpoint + url);
+    return this.httpClient.post(this.APIEndpoint + url, data, httpOptions);
+  }
+
+  public saveVendor(data: VendorsModel, url: string): any {
+    console.log(this.APIEndpoint + url);
+    return this.httpClient.post(this.APIEndpoint + url, data, httpOptions);
+  }
+
+  public getVendor(url: string): any {
+    console.log(this.APIEndpoint + url);
+    return this.httpClient.get(this.APIEndpoint + url);
+  }
 }

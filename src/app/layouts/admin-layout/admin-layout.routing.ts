@@ -14,6 +14,7 @@ import { StockinComponent } from 'app/components/stockin/stockin.component';
 import { AddsalesComponent } from 'app/components/addsales/addsales.component';
 import { AppSalesComponent } from 'app/components/app-sales/app-sales.component';
 
+
 export const AdminLayoutRoutes: Routes = [
     // {
     //   path: '',
@@ -69,6 +70,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'customer',       component: CustomerInfoComponent },
     { path: 'stockin',       component: StockinComponent },
     { path: 'sales',      component: AppSalesComponent },
+    { path: 'vendor/:id',     component: VendorComponent },
 
 
 ];

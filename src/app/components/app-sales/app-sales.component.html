@@ -29,24 +29,25 @@
               </mat-autocomplete>
             </mat-form-field>
         </div>
-       <div class="col-sm">
+       <div class="col-sm padding-top-12">
+         
            <input type="number" name="Price{{i}}"
                   placeholder="Price" (blur)="calculate($event, sale)"
-               [(ngModel)]="sale.Price"   class="form-control">
+               [(ngModel)]="sale.Price"   class="form-control small-textbox">
        </div>
-       <div class="col-sm">
+       <div class="col-sm padding-top-12 w-12">
            <input type="number" name="Quantity{{i}}"
               (blur)="calculate($event, sale)"   placeholder="Quantity"
-             [(ngModel)]="sale.Quantity"     class="form-control" >
+             [(ngModel)]="sale.Quantity"     class="form-control small-textbox" >
                
        </div>
-       <div class="col-sm">
+       <div class="col-sm padding-top-12 w-12">
            <input type="number" name="Total{{i}}"
               (blur)="calculate($event, sale)"   [(ngModel)]="sale.Total" placeholder="total"
-                  class="form-control" >
+                  class="form-control small-textbox" >
                
        </div>
-       <div class="col-sm">
+       <div class="col-sm padding-top-12 w-12">
 <!--         
            <button type="button" class="btn btn-default"
                  (click)="removeSale($event, i)" > Remove</button> -->
