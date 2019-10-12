@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 //import { Vendor } from 'src/app/model/vendor';
 
 import { SalesListSearchModel } from 'app/components/model/SalesListSearchModel';
-import { Vendor } from 'app/components/model/vendor';
+// import { Vendor } from 'app/components/model/vendor';
 import { SalesList } from 'app/components/model/saleslist';
+import { Vendor } from 'app/components/model/vendor';
+
 //import { SalesList } from 'src/app/model/saleslist';
 
 @Component({
@@ -46,7 +48,7 @@ export class SalesListComponent implements OnInit {
   getVendorList(): Array<Vendor> {
     this.vendorList = new Array<Vendor>();
     for (let i = 0; i < 10; i++) {
-      this.vendorList.push({ Id: i, Name: "vendor" + i });
+      this.vendorList.push({ Id: i, firstName: "vendor" + i });
     }
     return this.vendorList;
 

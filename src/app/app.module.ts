@@ -35,6 +35,7 @@ import { AppSalesComponent } from './components/app-sales/app-sales.component';
 import { VendorService } from 'Services/vendor.service';
 import { CustomerService } from 'Services/customer.service';
 import { MatAutocompleteModule } from '@angular/material';
+import {  CommonService } from 'Services/common-service';
 
 @NgModule({
   imports: [
@@ -69,7 +70,7 @@ import { MatAutocompleteModule } from '@angular/material';
     // SalesEditComponent
 
   ],
-  providers: [VendorService,CustomerService],
+  providers: [VendorService,CustomerService,CommonService],
   bootstrap: [AppComponent]
  // entryComponents : [AppSalesComponent]
 })

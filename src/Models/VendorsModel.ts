@@ -1,5 +1,6 @@
 export class VendorsModel
 {
+  Id:number;
     firstName:string;
     middleName:string;
     lastName:string;
@@ -15,3 +16,5 @@ export class VendorsModel
     //officePhone:string;
    
   }
+
+  
