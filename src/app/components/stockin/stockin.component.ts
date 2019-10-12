@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import {Observable, of} from 'rxjs';
-import {startWith, map} from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
 import { VendorService } from 'Services/vendor.service';
 import { VendorsModel } from 'Models/VendorsModel';
-import {  CommonService } from 'Services/common-service';
+import { CommonService } from 'Services/common-service';
 import {
- 
+
   debounceTime,
   mergeMapTo,
   mergeMap,
@@ -31,20 +31,19 @@ export class StockinComponent implements OnInit {
   stockinForm: FormGroup;
   submitted = false;
   vendorList: any;
-  options: string[] = ['One', 'Two', 'Three','sdf','ee','aa','bb','cc','ff','gg','hh'];
+  options: string[] = ['One', 'Two', 'Three', 'sdf', 'ee', 'aa', 'bb', 'cc', 'ff', 'gg', 'hh'];
   filteredOptions: Observable<string[]>;
   vendorAutoComplete = new FormControl();
-  vendorNamesList:VendorsModel[];
+  vendorNamesList: VendorsModel[];
   public githubAutoComplete$: Observable<VendorsModel[]> = null;
   public autoCompleteControl = new FormControl();
 
-  constructor(private formBuilder: FormBuilder,private vendorService:VendorService)
-     {
+  constructor(private formBuilder: FormBuilder, private vendorService: VendorService) {
 
-   }
+  }
 
 
-   lookup(value: string): Observable<VendorsModel[]> {
+  lookup(value: string): Observable<VendorsModel[]> {
     return this.vendorService.searchVendorNames(value.toLowerCase()).pipe(
       // map the item property of the github results as our return object
       map(results => results),
@@ -57,10 +56,11 @@ export class StockinComponent implements OnInit {
 
   ngOnInit() {
     this.vendorList =
-    [
-      {id:10,name:"vendor1"},
-      {id:11,name:"vendor2"} 
-    ];
+      [
+        { id: 10, name: 'vendor1' },
+        { id: 11, name: 'vendor2' }
+      ];
+
 
     this.filteredOptions = this.vendorAutoComplete.valueChanges
       .pipe(
@@ -69,10 +69,10 @@ export class StockinComponent implements OnInit {
       );
 
     this.stockinForm = this.formBuilder.group({
-      vendor: ['',Validators.required,],
+      vendor: ['', Validators.required, ],
       simpleName: ['', Validators.required],
       createdDate: ['', [Validators.required, Validators]],
-      totalCount: [null,[Validators.required, Validators.min(1)]],
+      totalCount: [null, [Validators.required, Validators.min(1)]],
     });
 
     this.githubAutoComplete$ = this.autoCompleteControl.valueChanges.pipe(
@@ -90,38 +90,40 @@ export class StockinComponent implements OnInit {
         }
       })
     );
-    
+
 
 
   }
 
- 
-  
-  
- // convenience getter for easy access to form fields
- get f() { return this.stockinForm.controls; }
 
-private _filter(value: string): string[] {
+
+
+  // convenience getter for easy access to form fields
+  get f() { return this.stockinForm.controls; }
+
+
+
+  private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 
     return this.options.filter(option => option.toLowerCase().includes(filterValue));
   }
 
- onSubmit() {
-  this.submitted = true;
-  console.log('submitted true now.....')
-  // stop here if form is invalid
-  if (this.stockinForm.invalid) {
+  onSubmit() {
+    this.submitted = true;
+    console.log('submitted true now.....')
+    // stop here if form is invalid
+    if (this.stockinForm.invalid) {
       return;
+    }
+
+    alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.stockinForm.value))
   }
 
-  alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.stockinForm.value))
- }
 
-
- SelectedOption(value){
-    console.log('SelectedOption----'+value);
-    this.stockinForm.controls['simpleName']=value;
- }
+  SelectedOption(value) {
+    console.log('SelectedOption----' + value);
+    this.stockinForm.controls['simpleName'] = value;
+  }
 
 }

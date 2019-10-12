@@ -1,4 +1,4 @@
-export  class Vendor{
-    Name:string;
-    Id:number;
-  }
+export class Vendor {
+  Name: string;
+  Id: number;
+}

@@ -40,7 +40,6 @@ import {  CommonService } from 'Services/common-service';
 @NgModule({
   imports: [
     BrowserAnimationsModule,
-    FormsModule,
     ReactiveFormsModule,
     HttpModule,
     ComponentsModule,
@@ -61,7 +60,7 @@ import {  CommonService } from 'Services/common-service';
     AppComponent,
     AdminLayoutComponent,
     // VendorComponent,
-   // StockinComponent,
+    // StockinComponent,
     // VendorListComponent,
     // GenericTableComponent,
     // CustomerListComponent,
@@ -70,8 +69,8 @@ import {  CommonService } from 'Services/common-service';
     // SalesEditComponent
 
   ],
-  providers: [VendorService,CustomerService,CommonService],
+  providers: [VendorService, CustomerService, CommonService],
   bootstrap: [AppComponent]
- // entryComponents : [AppSalesComponent]
+  // entryComponents : [AppSalesComponent]
 })
 export class AppModule { }

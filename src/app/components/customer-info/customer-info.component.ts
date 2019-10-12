@@ -9,7 +9,6 @@ import { CustomerService } from 'Services/customer.service';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':  'application/json'
-    //'Authorization': 'my-auth-token'
   })
 };
 @Component({
@@ -18,18 +17,18 @@ const httpOptions = {
   styleUrls: ['./customer-info.component.css']
 })
 export class CustomerInfoComponent implements OnInit {
-  
+
   _customerService: CustomerService ;
   customerForm: FormGroup;
   submitted = false;
   headers: Headers;
 
-  mobilePattern = "^[6-9][0-9]{9}$";
+  mobilePattern = '^[6-9][0-9]{9}$';
   test = new CustomerModel();
-  
 
-  constructor(private httpClient: HttpClient,private formBuilder: FormBuilder,private customerService:CustomerService) { 
-    this._customerService=customerService;
+
+  constructor(private httpClient: HttpClient, private formBuilder: FormBuilder, private customerService: CustomerService) {
+    this._customerService = customerService;
   }
 
   ngOnInit() {
@@ -49,7 +48,7 @@ export class CustomerInfoComponent implements OnInit {
 
 
   });
-  //this.getContacts();
+  // this.getContacts();
   this._customerService.getContacts('customer');
   }
 // convenience getter for easy access to form fields
@@ -79,10 +78,10 @@ get f() { return this.customerForm.controls; }
     if (this.customerForm.invalid) {
         return;
     }
-    var data =JSON.stringify(this.customerForm.value);
-      //alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.vendorForm.value))
-    this._customerService.AddCustomer(data,'Customer/AddCustomer');
-   
+    const data = JSON.stringify(this.customerForm.value);
+      // alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.vendorForm.value))
+    this._customerService.AddCustomer(data, 'Customer/AddCustomer');
+
    }
 
   // private AddCustomer(data: string,url:string) {

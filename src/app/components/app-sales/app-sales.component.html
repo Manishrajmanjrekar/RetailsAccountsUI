@@ -1,37 +1,54 @@
-<form  #f="ngForm">
-  <div class="container">
-  <div class="row">
+<form>
+  <div class="container" style="margin-top: 100px;">
+
+      
+  <div class="row" *ngFor="let sale of newSales; let i=index">
     
       <div class="col-sm">
-          <select [(ngModel)]="vendorname" name="somename">
+          <!-- <select [(ngModel)]="vendorname" name="somename">
             <option *ngFor="let item of sales.vendorNames" [value]="item.id" >{{item.name}}</option>
-          </select>
+          </select> -->
+            <mat-form-field>
+              <mat-label>Stock In's</mat-label>
+              <mat-select [(ngModel)]="selectedStockIn" name="stockin-dwn">
+                <input (keyup)="onKey($event.target.value)" name="mat-dropdown-search">
+                <mat-option>None</mat-option>
+                <mat-option *ngFor="let stockIn of selectedStockIns" [value]="stockIn.Quantity">{{stockIn.stockName}}</mat-option>
+              </mat-select>
+            </mat-form-field>
          
        </div>
        <div class="col-sm">
-           <input type="number" name="Price"
-                  placeholder="Price" (blur)="calculate($event.target.name, $event.currentTarget.value)"
-               [(ngModel)]="sales.Price"   class="form-control">
+           <input type="number" name="Price{{i}}"
+                  placeholder="Price" (blur)="calculate($event, sale)"
+               [(ngModel)]="sale.Price"   class="form-control">
        </div>
        <div class="col-sm">
-           <input type="number" name="Quantity"
-              (blur)="calculate($event.target.name, $event.currentTarget.value)"   placeholder="Quantity"
-             [(ngModel)]="sales.Quantity"     class="form-control" >
+           <input type="number" name="Quantity{{i}}"
+              (blur)="calculate($event, sale)"   placeholder="Quantity"
+             [(ngModel)]="sale.Quantity"     class="form-control" >
                
        </div>
        <div class="col-sm">
-           <input type="number" name="Total"
-              (blur)="calculate($event.target.name, $event.currentTarget.value)"   [(ngModel)]="sales.Total" placeholder="total"
+           <input type="number" name="Total{{i}}"
+              (blur)="calculate($event, sale)"   [(ngModel)]="sale.Total" placeholder="total"
                   class="form-control" >
                
        </div>
        <div class="col-sm">
-           <button type="submit" class="btn btn-primary"
-                 (click)="save()" > Save</button>
+<!--         
            <button type="button" class="btn btn-default"
-                 (click)="removeObject()" > Remove</button>
-                    <p> {{f.value|json}}</p>
+                 (click)="removeSale($event, i)" > Remove</button> -->
+                 <a style="font-size: 30px; cursor: pointer;"><i style="font-size: 30px; cursor: pointer;" (click)="removeSale($event, i)" class="material-icons">
+                    clear
+                    </i></a>
        </div>
      </div>
+     <button type="button" 
+      (click)="addComponent()"
+      class="btn btn-primary">Add Row </button>
+      <button type="submit" class="btn btn-primary"
+      (click)="save()" > Save</button>
+
   </div>
 </form>

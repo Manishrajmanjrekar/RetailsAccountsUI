@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-//import { Vendor } from 'src/app/model/vendor';
+// import { Vendor } from 'src/app/model/vendor';
 
 import { SalesListSearchModel } from 'app/components/model/SalesListSearchModel';
 // import { Vendor } from 'app/components/model/vendor';
 import { SalesList } from 'app/components/model/saleslist';
 import { Vendor } from 'app/components/model/vendor';
 
-//import { SalesList } from 'src/app/model/saleslist';
+// import { SalesList } from 'src/app/model/saleslist';
 
 @Component({
   selector: 'app-sales-list',
@@ -14,12 +14,12 @@ import { Vendor } from 'app/components/model/vendor';
   styleUrls: ['./sales-list.component.css']
 })
 export class SalesListComponent implements OnInit {
-   vendorId:number;
+   vendorId: number;
   searchData: string;
   vendorList: Array<Vendor>;
   salesList: SalesList[];
-  salesColumns:Array<string>;
-  gridData:Array<SalesList>;
+  salesColumns: Array<string>;
+  gridData: Array<SalesList>;
   public displayColInfo: any[];
   constructor() {
 
@@ -28,7 +28,7 @@ export class SalesListComponent implements OnInit {
 
   ngOnInit() {
     this.vendorList = this.getVendorList();
-    this.salesList =this.getSalesByVendor(null);
+    this.salesList = this.getSalesByVendor(null);
     if (this.salesList.length > 0) {
       const temp = this.salesList[0];
       this.salesColumns = Object.getOwnPropertyNames(temp);
@@ -39,39 +39,39 @@ export class SalesListComponent implements OnInit {
       { field: 'vendorName', header: 'vendor Name' },
       { field: 'customerName', header: 'customer Name' },
       { field: 'Price', header: 'Price' },
-      { field: 'Quantity', header: 'Quantity' },      
+      { field: 'Quantity', header: 'Quantity' },
       { field: 'Total', header: 'Total' }
     ];
   }
-  
+
 
   getVendorList(): Array<Vendor> {
     this.vendorList = new Array<Vendor>();
     for (let i = 0; i < 10; i++) {
-      this.vendorList.push({ Id: i, firstName: "vendor" + i });
+      this.vendorList.push({ Id: i, Name: 'vendor' + i });
     }
     return this.vendorList;
 
   }
 
-  public vendorChangeEvent(){
+  public vendorChangeEvent() {
     console.log(this.vendorId);
-    this.gridData =  this.salesList.filter(item => item.VendorId==this.vendorId);
+    this.gridData =  this.salesList.filter(item => item.VendorId === this.vendorId);
   }
 
-  clearData(){
-    this.vendorId=null;
-    //this.vendorList = this.getVendorList();
+  clearData() {
+    this.vendorId = null;
+    // this.vendorList = this.getVendorList();
     this.gridData = this.salesList;
-    
+
   }
- 
-  getSalesByVendor(searchData:SalesList):Array<SalesList>{
-    console.log("event is called");
+
+  getSalesByVendor(searchData: SalesList): Array<SalesList> {
+    console.log('event is called');
     this.salesList = new Array<SalesList>();
-    for(let i =0;i<10;i++){
-           this.salesList.push({vendorName:"vendor"+i,customerName :"customer"+i,
-           Price:7,Quantity:100,Total:1745,VendorId:i });
+    for (let i = 0; i < 10; i++) {
+           this.salesList.push({vendorName: 'vendor' + i, customerName : 'customer' + i,
+           Price: 7, Quantity: 100, Total: 1745, VendorId: i });
     }
 
     return this.salesList;
