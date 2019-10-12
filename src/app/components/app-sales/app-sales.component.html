@@ -19,6 +19,17 @@
          
        </div>
        <div class="col-sm">
+          <mat-form-field>
+              <input [formControl]="autoCompleteControl" type="text" placeholder="Select Vendor"
+               aria-label="Number" matInput [matAutocomplete]="auto">
+              <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="SelectedOption($event.option.value)">
+                <mat-option *ngFor="let item of githubAutoComplete$ | async; let index = index" [value]="item.lastName">
+                  {{ item.lastName | titlecase}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+        </div>
+       <div class="col-sm">
            <input type="number" name="Price{{i}}"
                   placeholder="Price" (blur)="calculate($event, sale)"
                [(ngModel)]="sale.Price"   class="form-control">

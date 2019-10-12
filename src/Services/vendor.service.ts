@@ -12,8 +12,8 @@ import { Observable, of } from 'rxjs';
 
 const httpOptions = {
   headers: new HttpHeaders({
-    'Content-Type':  'application/json'
-    //'Authorization': 'my-auth-token'
+    'Content-Type': 'application/json'
+    // 'Authorization': 'my-auth-token'
   })
 };
 
@@ -27,18 +27,17 @@ export class VendorService {
   test = new VendorsModel();
   APIEndpoint = environment.accountApi;
 
-  constructor(private httpClient: HttpClient,private formBuilder: FormBuilder) {
-   
-   }
+  constructor(private httpClient: HttpClient, private formBuilder: FormBuilder) {
 
-   public getContacts(url:string,)
-  {
-    
-    console.log('customerinfo Service call---'+this.APIEndpoint+url);
-    this.httpClient.get(this.APIEndpoint+url,).subscribe(
+  }
+
+  public getContacts(url: string, ) {
+
+    console.log('customerinfo Service call---' + this.APIEndpoint + url);
+    this.httpClient.get(this.APIEndpoint + url).subscribe(
       res => {
-        this.test.firstName =res["firstName"];
-        console.log('res customer get call---- :-'+ this.test.firstName);
+        this.test.firstName = res['firstName'];
+        console.log('res customer get call---- :-' + this.test.firstName);
       },
       (err: HttpErrorResponse) => {
         console.log(err.error);
@@ -49,14 +48,13 @@ export class VendorService {
     );
   }
 
-  public getVendorData(url:string,)
-  {
-    
-    console.log('customerinfo Service call---'+this.APIEndpoint+url);
-    this.httpClient.get(this.APIEndpoint+url).subscribe(
+  public getVendorData(url: string, ) {
+
+    console.log('customerinfo Service call---' + this.APIEndpoint + url);
+    this.httpClient.get(this.APIEndpoint + url).subscribe(
       res => {
-        this.test.firstName =res["firstName"];
-        console.log('res customer get call---- :-'+ this.test.firstName);
+        this.test.firstName = res['firstName'];
+        console.log('res customer get call---- :-' + this.test.firstName);
       },
       (err: HttpErrorResponse) => {
         console.log(err.error);
@@ -67,15 +65,15 @@ export class VendorService {
     );
   }
 
-  public AddVendor(data: string,url:string) {
+  public AddVendor(data: string, url: string) {
     console.log('VendorService---AddVendor');
-   //data is after stringfy of formdata........
-    //this.AddCustomer(data);
-    //var url = 'http://localhost:54436/api/Customer/AddCustomer';
-    this.httpClient.post(this.APIEndpoint+url, data, httpOptions).subscribe(res => {
+    // data is after stringfy of formdata........
+    // this.AddCustomer(data);
+    // var url = 'http://localhost:54436/api/Customer/AddCustomer';
+    this.httpClient.post(this.APIEndpoint + url, data, httpOptions).subscribe(res => {
       console.log('VendorService---AddVendor---Success');
 
-      this.test.firstName = res["firstName"];
+      this.test.firstName = res['firstName'];
       console.log('res ' + this.test.firstName);
 
     }, (err: HttpErrorResponse) => {
@@ -87,21 +85,21 @@ export class VendorService {
   }
 
   public searchVendorNames(query: string): Observable<VendorsModel[]> {
-    //const url = 'https://api.github.com/search/repositories';
+    // const url = 'https://api.github.com/search/repositories';
     const url = 'http://localhost:57956/api/Vendor/VendorNames';
 
     return this.httpClient
-      .post<VendorsModel[]>(url, { 
-        q:query, sort: 'stars', order: 'desc'
-      
+      .post<VendorsModel[]>(url, {
+        q: query, sort: 'stars', order: 'desc'
+
       })
       .pipe(
         map(res => {
           return res;
         },
-         catchError(_ => {
-        return of(null);
-      })
-      ))
+          catchError(_ => {
+            return of(null);
+          })
+        ))
   }
 }
