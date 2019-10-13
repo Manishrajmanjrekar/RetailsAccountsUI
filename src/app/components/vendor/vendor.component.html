@@ -6,7 +6,8 @@
         <form [formGroup]="vendorForm" (ngSubmit)="onSubmit()">
           <div class="form-group">
             <input type="text" formControlName="nickName" placeholder="Nick Name" class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f.nickName.errors }" (keyup)="checkIsDuplicateNickName()" />
+              [ngClass]="{ 'is-invalid': submitted && f.nickName.errors }" 
+              (keyup)="checkIsDuplicateNickName()" [attr.disabled] = "vendorId > 0 ? 'disabled' : null" />
             <div *ngIf="submitted && f.nickName.errors" class="invalid-feedback">
               <div *ngIf="f.nickName.errors.required">Nick Name is required</div>
             </div>
@@ -66,15 +67,6 @@
             </div>
           </div>
 
-          <!-- <div class="form-group">
-            <input type="text" formControlName="officePhone" placeholder="Office Phone Number" maxlength="10"
-              class="form-control" [ngClass]="{ 'is-invalid': submitted && f.officePhone.errors }" />
-            <div *ngIf="submitted && f.officePhone.errors" class="invalid-feedback">
-              <div *ngIf="f.officePhone.errors.required">Office Phone Number is required</div>
-              <div *ngIf="f.officePhone.errors.pattern">Invalid Office Phone Number</div>
-            </div>
-          </div> -->
-
           <div class="form-group">
             <input type="text" formControlName="email" placeholder="Email" class="form-control"
               [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
@@ -108,22 +100,6 @@
             </div>
           </div>
 
-          <!-- <div class="form-group">
-            <input type="text" formControlName="shopName" placeholder="Shop Name" class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f.shopName.errors }" />
-            <div *ngIf="submitted && f.shopName.errors" class="invalid-feedback">
-              <div *ngIf="f.shopName.errors.required">Shop Name is required</div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <input type="text" formControlName="shopLocation" placeholder="Shop Location" class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f.shopLocation.errors }" />
-            <div *ngIf="submitted && f.shopLocation.errors" class="invalid-feedback">
-              <div *ngIf="f.shopLocation.errors.required">Shop Location is required</div>
-            </div>
-          </div> -->
-
           <div class="form-group">
             <input type="text" formControlName="referredBy" placeholder="Referred By" class="form-control"
               [ngClass]="{ 'is-invalid': submitted && f.referredBy.errors }" />
@@ -135,6 +111,7 @@
 
           <div class="form-group">
             <button class="btn btn-primary">Submit</button>
+            <button type="reset" class="btn btn-info ml-5" (click)="clear()">Clear</button>
           </div>
         </form>
       </div>

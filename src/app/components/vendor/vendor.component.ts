@@ -1,11 +1,11 @@
 import { map } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControlDirective, FormControlName } from '@angular/forms';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { VendorsModel } from 'Models/VendorsModel';
 import { VendorService } from 'Services/vendor.service';
 import { UIModel } from 'Models/UIModel';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -25,6 +25,7 @@ export class VendorComponent implements OnInit {
   submitted = false;
   headers: Headers;
   _vendorService: VendorService;
+  isParamRouteInvoked = false;
   mobilePattern = '^[6-9][0-9]{9}$';
   isDuplicateNickName = false;
   test = new VendorsModel();
@@ -33,13 +34,25 @@ export class VendorComponent implements OnInit {
   msg = '';
   showMsg = false;
 
-  constructor(private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute,
+  constructor(private formBuilder: FormBuilder, private router: Router, private activatedRoute: ActivatedRoute,
     private httpClient: HttpClient, private vendorService: VendorService) {
     this._vendorService = vendorService;
   }
 
   ngOnInit() {
-    let isParamRouteInvoked = false;
+    // adding nativeElement property to FormControl
+    const originFormControlNgOnChanges = FormControlDirective.prototype.ngOnChanges;
+    FormControlDirective.prototype.ngOnChanges = function () {
+        this.form.nativeElement = this.valueAccessor._elementRef.nativeElement;
+        return originFormControlNgOnChanges.apply(this, arguments);
+    };
+    
+    const originFormControlNameNgOnChanges = FormControlName.prototype.ngOnChanges;
+    FormControlName.prototype.ngOnChanges = function () {
+        const result = originFormControlNameNgOnChanges.apply(this, arguments);
+        this.control.nativeElement = this.valueAccessor._elementRef.nativeElement;
+        return result;
+    };    
 
     // read route parameters
     /*this.activatedRoute
@@ -56,22 +69,22 @@ export class VendorComponent implements OnInit {
       .params
       .subscribe(params => {
         console.log('Regular Params:', params);
-        isParamRouteInvoked = true;
         if (params) {
           this.vendorId = Number(params['id']) || 0;
         }
 
         if (this.vendorId > 0) {
+          this.isParamRouteInvoked = true;
           this.loadEditForm();
         } else {
           this.loadAddForm();
         }
       });
 
-    if (!isParamRouteInvoked) {
+    if (!this.isParamRouteInvoked) {
       this.loadAddForm();
     }
-  }
+  } 
 
   loadAddForm() {
     console.log('loadAddForm invoked');
@@ -94,23 +107,23 @@ export class VendorComponent implements OnInit {
     }
     /*
     this.vendorForm = this.formBuilder.group({
-    nickName: ['', Validators.required],
-    firstName: ['', Validators.required],
-    middleName: ['', Validators.required],
-    lastName: ['', Validators.required],
-    mobile: ['', [Validators.required, Validators.pattern(this.mobilePattern)]],
-    alternateMobile: ['', [Validators.pattern(this.mobilePattern)]],
-    homePhone: ['', Validators.pattern(this.mobilePattern)],
-    officePhone: ['', Validators.pattern(this.mobilePattern)],
-    email: ['', Validators.required],
-    address: ['', Validators.required],
-    city: ['', Validators.required],
-    state: ['', Validators.required],
-    shopName: ['', Validators.required],
-    shopLocation: ['', Validators.required],
-    referredBy: ['']
-  });
-  */
+      nickName: ['', Validators.required],
+      firstName: ['', Validators.required],
+      middleName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      mobile: ['', [Validators.required, Validators.pattern(this.mobilePattern)]],
+      alternateMobile: ['', [Validators.pattern(this.mobilePattern)]],
+      homePhone: ['', Validators.pattern(this.mobilePattern)],
+      officePhone: ['', Validators.pattern(this.mobilePattern)],
+      email: ['', Validators.required],
+      address: ['', Validators.required],
+      city: ['', Validators.required],
+      state: ['', Validators.required],
+      shopName: ['', Validators.required],
+      shopLocation: ['', Validators.required],
+      referredBy: ['']
+    });
+    */
 
     this.vendorForm = this.formBuilder.group({
       nickName: [this.vendorDetails.nickName, Validators.required],
@@ -120,15 +133,21 @@ export class VendorComponent implements OnInit {
       mobile: [this.vendorDetails.mobile, [Validators.required, Validators.pattern(this.mobilePattern)]],
       alternateMobile: [this.vendorDetails.alternateMobile, [Validators.pattern(this.mobilePattern)]],
       homePhone: [this.vendorDetails.homePhone, Validators.pattern(this.mobilePattern)],
-      // officePhone: [this.vendorDetails.officePhone, Validators.pattern(this.mobilePattern)],
       email: [this.vendorDetails.email, [Validators.required, Validators.email]],
       address: [this.vendorDetails.address, Validators.required],
       city: [this.vendorDetails.city, Validators.required],
       state: [this.vendorDetails.state, Validators.required],
-      // shopName: [this.vendorDetails.shopName, Validators.required],
-      // shopLocation: [this.vendorDetails.shopLocation, Validators.required],
       referredBy: ['']
     });
+
+    setTimeout(() => {      
+      if (this.vendorDetails.id > 0) {
+       this.setElementfocusByIndex(1);
+      }
+      else {
+        this.setElementfocusByIndex(0);
+      }
+    }, 50);
   }
 
   // convenience getter for easy access to form fields
@@ -153,7 +172,6 @@ export class VendorComponent implements OnInit {
 
     const data = JSON.stringify(this.vendorForm.value);
     // alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.vendorForm.value));
-    // this._vendorService.AddVendor(data,'Vendor/AddVendor');
 
     this.vendorDetails = <VendorsModel>(this.vendorForm.value);
     this.vendorDetails.id = this.vendorId;
@@ -214,6 +232,36 @@ export class VendorComponent implements OnInit {
           console.log(this.isDuplicateNickName);
         });
     }
+  }
+
+  clear() {
+    console.log('clear function invoked');
+    
+    if (this.isParamRouteInvoked) {
+      console.log('re-navigating form');
+      this.router.navigate(['vendor']);
+    }
+    else {  
+      console.log('resetting form');
+      this.vendorId = 0;    
+      this.vendorDetails = new VendorsModel();
+      this.submitted = false;
+      this.isDuplicateNickName = false;           
+
+      this.vendorForm.reset();
+      this.vendorForm.markAsUntouched();
+      // Object.keys(this.vendorForm.controls).forEach(key => {
+      //   this.vendorForm.get(key).clearValidators();
+      // });
+      setTimeout(() => {this.setElementfocusByIndex(0)},50);
+    }
+  }
+
+  setElementfocusByIndex(index:number) {
+    // set focus on formcontrol element
+    console.log('setting focus on element ' + index);
+    let firstElement = <any>this.vendorForm.get(Object.keys(this.vendorForm.controls)[index]);
+    if (firstElement.nativeElement) firstElement.nativeElement.focus();
   }
 
 }

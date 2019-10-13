@@ -62,6 +62,18 @@ export class CustomerService {
     });
   }
 
+  public checkIsDuplicateNickName(data: string, url: string): any {
+    console.log(this.APIEndpoint + url);
+    return this.httpClient.post(this.APIEndpoint + url, data, httpOptions);
+  }
 
+  public saveCustomer(data: CustomerModel, url: string): any {
+    console.log(this.APIEndpoint + url);
+    return this.httpClient.post(this.APIEndpoint + url, data, httpOptions);
+  }
 
+  public getCustomer(url: string): any {
+    console.log(this.APIEndpoint + url);
+    return this.httpClient.get(this.APIEndpoint + url);
+  }
 }

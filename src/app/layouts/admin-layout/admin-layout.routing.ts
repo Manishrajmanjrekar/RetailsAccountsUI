@@ -71,6 +71,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'stockin',       component: StockinComponent },
     { path: 'sales',      component: AppSalesComponent },
     { path: 'vendor/:id',     component: VendorComponent },
+    { path: 'customer/:id',   component: CustomerInfoComponent },
 
 
 ];
