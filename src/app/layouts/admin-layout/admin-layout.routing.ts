@@ -13,6 +13,8 @@ import { CustomerInfoComponent } from 'app/components/customer-info/customer-inf
 import { StockinComponent } from 'app/components/stockin/stockin.component';
 import { AddsalesComponent } from 'app/components/addsales/addsales.component';
 import { AppSalesComponent } from 'app/components/app-sales/app-sales.component';
+import { VendorListComponent } from 'app/components/vendor-list/vendor-list.component';
+import { CustomerListComponent } from 'app/components/customer-list/customer-list.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -72,6 +74,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'sales',      component: AppSalesComponent },
     { path: 'vendor/:id',     component: VendorComponent },
     { path: 'customer/:id',   component: CustomerInfoComponent },
-
-
+    { path: 'vendorlist',     component: VendorListComponent },
+    { path: 'customerlist',     component: CustomerListComponent },
 ];

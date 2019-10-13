@@ -1,10 +1,5 @@
 <div class="jumbotron">
-  <div class="container">
-    <h3>
-      Customer List
-    </h3>
-    <br/>
-
+  <div class="container">    
     <form [formGroup]="searchForm" (ngSubmit)="performSearch()">
       <div class="row">
         <div class="col-md-6">  
@@ -24,7 +19,7 @@
     </form>
     <br/>
 
-    <app-generic-table [dataSource]="dataSource" [displayColInfo]="displayColInfo">
-    </app-generic-table>
+    <app-generic-mattable [dataSource]="dataSource" [displayColInfo]="displayColInfo"></app-generic-mattable>
+    <!-- <app-generic-table [dataSource]="dataSource" [displayColInfo]="displayColInfo"></app-generic-table> -->
   </div>
 </div>

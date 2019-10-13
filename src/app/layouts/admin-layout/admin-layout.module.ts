@@ -14,6 +14,10 @@ import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import { VendorComponent } from './../../components/vendor/vendor.component';
 import { CustomerInfoComponent } from 'app/components/customer-info/customer-info.component';
 import { StockinComponent } from 'app/components/stockin/stockin.component';
+import { VendorListComponent } from 'app/components/vendor-list/vendor-list.component';
+import { CustomerListComponent } from 'app/components/customer-list/customer-list.component';
+import { GenericTableComponent } from 'app/components/generic-table/generic-table.component';
+import { GenericMatTableComponent } from 'app/components/generic-mattable/generic-mattable.component';
 
 import {
   MatButtonModule,
@@ -22,8 +26,15 @@ import {
   MatFormFieldModule,
   MatTooltipModule,
   MatSelectModule,
-  MatAutocompleteModule,
-
+  MatAutocompleteModule,  
+  MatTableModule,
+  MatSortModule,
+  MatPaginatorModule,
+  MatCardModule,
+  MatProgressSpinnerModule,
+  MatMenuModule,
+  MatIconModule,
+  MatToolbarModule,
 } from '@angular/material';
 import { AddsalesComponent } from 'app/components/addsales/addsales.component';
 import { AppSalesComponent } from 'app/components/app-sales/app-sales.component';
@@ -41,7 +52,15 @@ import { AppSalesComponent } from 'app/components/app-sales/app-sales.component'
     MatInputModule,
     MatSelectModule,
     MatTooltipModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatCardModule,
+    MatProgressSpinnerModule,
+    MatMenuModule,
+    MatIconModule,
+    MatToolbarModule
   ],
   declarations: [
     DashboardComponent,
@@ -56,7 +75,11 @@ import { AppSalesComponent } from 'app/components/app-sales/app-sales.component'
     CustomerInfoComponent,
     StockinComponent,
     AddsalesComponent,
-    AppSalesComponent
+    AppSalesComponent,
+    VendorListComponent,
+    CustomerListComponent,
+    GenericTableComponent,
+    GenericMatTableComponent,
   ]
 })
 

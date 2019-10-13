@@ -24,8 +24,6 @@ import {
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 // import { VendorComponent } from './components/vendor/vendor.component';
 import { StockinComponent } from './components/stockin/stockin.component';
-import { VendorListComponent } from './components/vendor-list/vendor-list.component';
-import { GenericTableComponent } from './components/generic-table/generic-table.component';
 import { CustomerListComponent } from './components/customer-list/customer-list.component';
 import { StockinListComponent } from './components/stockin-list/stockin-list.component';
 import { SalesListComponent } from './components/Sales/sales-list/sales-list.component';
