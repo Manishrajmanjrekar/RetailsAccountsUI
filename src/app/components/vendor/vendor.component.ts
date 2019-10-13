@@ -26,7 +26,6 @@ export class VendorComponent implements OnInit {
   headers: Headers;
   _vendorService: VendorService;
   mobilePattern = '^[6-9][0-9]{9}$';
-  emailPattern = '^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$';
   isDuplicateNickName = false;
   test = new VendorsModel();
   vendorId = 0;
@@ -122,8 +121,7 @@ export class VendorComponent implements OnInit {
       alternateMobile: [this.vendorDetails.alternateMobile, [Validators.pattern(this.mobilePattern)]],
       homePhone: [this.vendorDetails.homePhone, Validators.pattern(this.mobilePattern)],
       // officePhone: [this.vendorDetails.officePhone, Validators.pattern(this.mobilePattern)],
-      // email: [this.vendorDetails.email, [Validators.required, Validators.pattern(this.emailPattern)]],
-      email: [this.vendorDetails.email, Validators.required],
+      email: [this.vendorDetails.email, [Validators.required, Validators.email]],
       address: [this.vendorDetails.address, Validators.required],
       city: [this.vendorDetails.city, Validators.required],
       state: [this.vendorDetails.state, Validators.required],
