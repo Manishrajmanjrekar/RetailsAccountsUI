@@ -22,4 +22,6 @@ export class CustomerModel
   createdBy: string;
   modifiedDate: string;
   modifiedBy: string;
+
+  url: string;
 }

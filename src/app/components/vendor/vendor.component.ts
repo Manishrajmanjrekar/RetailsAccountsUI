@@ -128,16 +128,16 @@ export class VendorComponent implements OnInit {
     this.vendorForm = this.formBuilder.group({
       nickName: [this.vendorDetails.nickName, Validators.required],
       firstName: [this.vendorDetails.firstName, Validators.required],
-      middleName: [this.vendorDetails.middleName, Validators.required],
+      middleName: [this.vendorDetails.middleName],
       lastName: [this.vendorDetails.lastName, Validators.required],
       mobile: [this.vendorDetails.mobile, [Validators.required, Validators.pattern(this.mobilePattern)]],
       alternateMobile: [this.vendorDetails.alternateMobile, [Validators.pattern(this.mobilePattern)]],
       homePhone: [this.vendorDetails.homePhone, Validators.pattern(this.mobilePattern)],
-      email: [this.vendorDetails.email, [Validators.required, Validators.email]],
+      email: [this.vendorDetails.email, [Validators.email]],
       address: [this.vendorDetails.address, Validators.required],
       city: [this.vendorDetails.city, Validators.required],
       state: [this.vendorDetails.state, Validators.required],
-      referredBy: ['']
+      referredBy: [this.vendorDetails.referredBy]
     });
 
     setTimeout(() => {      

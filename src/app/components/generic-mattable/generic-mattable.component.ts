@@ -28,6 +28,7 @@ export class GenericMatTableComponent implements OnInit {
   ngAfterViewInit() {
     this.matTblDataSource.paginator = this.paginator;
     this.matTblDataSource.sort = this.sort;
+    this.matTblDataSource.sortingDataAccessor = (data, sortHeaderId) => data[sortHeaderId].toLocaleLowerCase();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -36,6 +37,7 @@ export class GenericMatTableComponent implements OnInit {
       this.matTblDataSource = new MatTableDataSource(this.dataSource);
       this.matTblDataSource.paginator = this.paginator;
       this.matTblDataSource.sort = this.sort;
+      this.matTblDataSource.sortingDataAccessor = (data, sortHeaderId) => data[sortHeaderId].toLocaleLowerCase();
     }
   }
 }

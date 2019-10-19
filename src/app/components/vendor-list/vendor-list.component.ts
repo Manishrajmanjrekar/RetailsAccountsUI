@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { VendorService } from 'Services/vendor.service';
+import { UIModel } from 'Models/UIModel';
+import { VendorsModel } from 'Models/VendorsModel';
 
 @Component({
   selector: 'app-vendor-list',
@@ -8,12 +11,16 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class VendorListComponent implements OnInit {
 
+  _vendorService: VendorService;
   public searchForm: FormGroup;
   public submitted: boolean = false;
-  public dataSource: VendorInfo[];
-  public displayColInfo: any[];
+  public dataSource: VendorsModel[];
+  public displayColInfo: UIModel.ColumnInfo[];
+  allVendors: VendorsModel[];
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private vendorService: VendorService) {
+    this._vendorService = vendorService;
+  }
 
   ngOnInit() {
     this.searchForm = this.fb.group({
@@ -21,16 +28,25 @@ export class VendorListComponent implements OnInit {
     });
 
     this.displayColInfo = [
-      { field: 'vendorId', header: 'Vendor Id' },
-      { field: 'name', header: 'Vendor Name' },
-      { field: 'address', header: 'Address' },
-      { field: 'city', header: 'City' },
-      { field: 'referredBy', header: 'Referred By' },
+      { field: 'nickName', header: 'Nick Name',  hyperlinkField: 'url' },
+      { field: 'firstName', header: 'First Name', hyperlinkField:'' },
+      { field: 'lastName', header: 'Last Name' },
       { field: 'mobile', header: 'Mobile' },
-      { field: 'alternateMobile', header: 'Alternate Mobile' }
+      
+      { field: 'city', header: 'City' },
+      { field: 'state', header: 'State' },      
+      { field: 'address', header: 'Address' },
     ];
 
-    this.dataSource = Vendors;
+    this._vendorService.getVendorList('Vendor')
+      .subscribe((result: VendorsModel[]) => {
+        console.log('fetched unfiltered list successfully');
+        this.allVendors = result;
+        for (let vendor of this.allVendors) {
+          vendor.url = '#/vendor/' + vendor.id;
+        }        
+        this.dataSource = this.allVendors;
+      }, error => console.error(error));
   }
 
   get f(){ return this.searchForm.controls};
@@ -43,38 +59,17 @@ export class VendorListComponent implements OnInit {
       return;
     }
 
-    this.dataSource =  Vendors;
+    this.dataSource =  this.allVendors;
     // filter data
-    let vendorName = this.searchForm.value.vendorName;
-    if (vendorName != undefined && vendorName != '') {
-      this.dataSource =  this.dataSource.filter(item => item.name.toLowerCase().indexOf(vendorName.toLowerCase()) !== -1);
-    }
+    let filterVal = this.searchForm.value.vendorName;
+    if (filterVal != undefined && filterVal != '') {
+      this.dataSource =  this.dataSource.filter(
+        item => (item.nickName.toLowerCase().indexOf(filterVal.toLowerCase()) !== -1
+        || item.firstName.toLowerCase().indexOf(filterVal.toLowerCase()) !== -1
+        || item.lastName.toLowerCase().indexOf(filterVal.toLowerCase()) !== -1)
+      )};
 
-    console.log(this.dataSource);
+    console.log(filterVal);
+    console.log('filtered list..');
   }
 }
-
-// models
-export class VendorInfo{
-  vendorId: number;
-  name: string;
-  address: string;
-  city: string;
-  referredBy: string;
-  mobile: string;
-  alternateMobile: string;
-}
-
-// mock data
-export const Vendors: VendorInfo[] = [
-  {vendorId: 1, name: 'Arjun', address: 'Arjun address', city: 'Hyderabad', referredBy: 'referrer 1', mobile:'8123456789', alternateMobile: '8234567890'},
-  {vendorId: 2, name: 'Rizwan', address: 'Rizwan address', city: 'Hyderabad', referredBy: 'referrer 1', mobile:'7123456789', alternateMobile: '7234567890'},
-  {vendorId: 3, name: 'Vendor3', address: 'Vendor3 address', city: 'Hyderabad', referredBy: 'referrer 2', mobile:'7123456789', alternateMobile: '7234567890'},
-  {vendorId: 4, name: 'Vendor4', address: 'Vendor4 address', city: 'Hyderabad', referredBy: 'referrer 2', mobile:'7123456789', alternateMobile: '7234567890'},
-  {vendorId: 5, name: 'Vendor5', address: 'Vendor5 address', city: 'Hyderabad', referredBy: 'referrer 1', mobile:'7123456789', alternateMobile: '7234567890'},
-  {vendorId: 6, name: 'Vendor6', address: 'Vendor6 address', city: 'Hyderabad', referredBy: 'referrer 3', mobile:'7123456789', alternateMobile: '7234567890'},
-  {vendorId: 7, name: 'Vendor7', address: 'Vendor7 address', city: 'Hyderabad', referredBy: 'referrer 1', mobile:'7123456789', alternateMobile: '7234567890'},
-  {vendorId: 8, name: 'Vendor8', address: 'Vendor8 address', city: 'Hyderabad', referredBy: 'referrer 5', mobile:'7123456789', alternateMobile: '7234567890'},
-  {vendorId: 9, name: 'Vendor9', address: 'Vendor9 address', city: 'Hyderabad', referredBy: 'referrer 2', mobile:'7123456789', alternateMobile: '7234567890'},
-  {vendorId: 10, name: 'Vendor10', address: 'Vendor10 address', city: 'Hyderabad', referredBy: 'referrer 1', mobile:'7123456789', alternateMobile: '7234567890'},
-];

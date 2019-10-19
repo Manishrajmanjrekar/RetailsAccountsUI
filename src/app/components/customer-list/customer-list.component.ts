@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CustomerService } from 'Services/customer.service';
+import { CustomerModel } from 'Models/CustomerModel';
+import { UIModel } from 'Models/UIModel';
 
 @Component({
   selector: 'app-customer-list',
@@ -7,12 +10,16 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./customer-list.component.css']
 })
 export class CustomerListComponent implements OnInit {
+  _customerService: CustomerService;
   public searchForm: FormGroup;
   public submitted: boolean = false;
-  public dataSource: CustInfo[];
-  public displayColInfo: any[];
+  public dataSource: CustomerModel[];
+  public displayColInfo: UIModel.ColumnInfo[];
+  allCustomers: CustomerModel[];
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private customerService: CustomerService) {
+    this._customerService = customerService;
+  }
 
   ngOnInit() {
     this.searchForm = this.fb.group({
@@ -20,15 +27,25 @@ export class CustomerListComponent implements OnInit {
     });
 
     this.displayColInfo = [
-      { field: 'customerId', header: 'Customer Id' },
-      { field: 'fullName', header: 'Customer Name' },
+      { field: 'nickName', header: 'Nick Name',  hyperlinkField: 'url' },
+      { field: 'firstName', header: 'First Name', hyperlinkField:'' },
+      { field: 'lastName', header: 'Last Name' },
+      { field: 'mobile', header: 'Mobile' },
+      
+      { field: 'city', header: 'City' },
+      { field: 'state', header: 'State' },      
       { field: 'address', header: 'Address' },
-      { field: 'email', header: 'Email' },
-      { field: 'customerRefferedBy', header: 'Referred By' },
-      { field: 'mobileno', header: 'Mobile' },
     ];
-    
-    this.dataSource = Customers;
+
+    this._customerService.getCustomerList('Customer')
+      .subscribe((result: CustomerModel[]) => {
+        console.log('fetched unfiltered list successfully');
+        this.allCustomers = result;
+        for (let customer of this.allCustomers) {
+          customer.url = '#/customer/' + customer.id;
+        }        
+        this.dataSource = this.allCustomers;
+      }, error => console.error(error));
   }
 
   get f(){ return this.searchForm.controls};
@@ -41,14 +58,18 @@ export class CustomerListComponent implements OnInit {
       return;
     }
 
-    this.dataSource =  Customers;
+    this.dataSource =  this.allCustomers;
     // filter data
-    let customerName = this.searchForm.value.customerName;
-    if (customerName != undefined && customerName != '') {
-      this.dataSource =  this.dataSource.filter(item => item.fullName.toLowerCase().indexOf(customerName.toLowerCase()) !== -1);
-    }
+    let filterVal = this.searchForm.value.customerName;
+    if (filterVal != undefined && filterVal != '') {
+      this.dataSource =  this.dataSource.filter(
+        item => (item.nickName.toLowerCase().indexOf(filterVal.toLowerCase()) !== -1
+        || item.firstName.toLowerCase().indexOf(filterVal.toLowerCase()) !== -1
+        || item.lastName.toLowerCase().indexOf(filterVal.toLowerCase()) !== -1)
+      )};
 
-    console.log(this.dataSource);
+    console.log(filterVal);
+    console.log('filtered list..');
   }
 }
 

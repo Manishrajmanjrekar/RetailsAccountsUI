@@ -96,19 +96,19 @@ export class CustomerInfoComponent implements OnInit {
       this.customerForm = this.formBuilder.group({
         nickName: [this.customerDetails.nickName, Validators.required],
         firstName: [this.customerDetails.firstName, Validators.required],
-        middleName: [this.customerDetails.middleName, Validators.required],
+        middleName: [this.customerDetails.middleName],
         lastName: [this.customerDetails.lastName, Validators.required],
         mobile: [this.customerDetails.mobile, [Validators.required, Validators.pattern(this.mobilePattern)]],
         alternateMobile: [this.customerDetails.alternateMobile, [Validators.pattern(this.mobilePattern)]],
         homePhone: [this.customerDetails.homePhone, Validators.pattern(this.mobilePattern)],
         officePhone: [this.customerDetails.officePhone, Validators.pattern(this.mobilePattern)],
-        email: [this.customerDetails.email, [Validators.required, Validators.email]],
+        email: [this.customerDetails.email, [Validators.email]],
         address: [this.customerDetails.address, Validators.required],
         city: [this.customerDetails.city, Validators.required],
         state: [this.customerDetails.state, Validators.required],
         shopName: [this.customerDetails.shopName, Validators.required],
         shopLocation: [this.customerDetails.shopLocation, Validators.required],
-        referredBy: ['']
+        referredBy: [this.customerDetails.referredBy]
       });
 
       setTimeout(() => {      

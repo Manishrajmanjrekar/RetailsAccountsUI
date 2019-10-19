@@ -5,4 +5,10 @@ export namespace UIModel {
       public message?: string;
       public recordId?: number = 0;
     }
+
+    export class ColumnInfo{
+      field: string;
+      header: string; 
+      hyperlinkField?: string;
+    }
   }
