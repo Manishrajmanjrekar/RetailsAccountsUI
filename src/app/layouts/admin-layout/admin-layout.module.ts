@@ -18,6 +18,9 @@ import { VendorListComponent } from 'app/components/vendor-list/vendor-list.comp
 import { CustomerListComponent } from 'app/components/customer-list/customer-list.component';
 import { GenericTableComponent } from 'app/components/generic-table/generic-table.component';
 import { GenericMatTableComponent } from 'app/components/generic-mattable/generic-mattable.component';
+import { ExpensesCategoryComponent } from 'app/components/expenses-category/expenses-category.component';
+import { ExpensesCategoryListComponent } from 'app/components/expenses-category-list/expenses-category-list.component';
+
 
 import {
   MatButtonModule,
@@ -80,6 +83,8 @@ import { AppSalesComponent } from 'app/components/app-sales/app-sales.component'
     CustomerListComponent,
     GenericTableComponent,
     GenericMatTableComponent,
+    ExpensesCategoryComponent,
+    ExpensesCategoryListComponent
   ]
 })
 

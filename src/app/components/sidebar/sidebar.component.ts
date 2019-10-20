@@ -21,7 +21,9 @@ export const ROUTES: RouteInfo[] = [
   { path: '/customerlist', title: 'Customer List', icon: 'people', class: '' },
   { path: '/customer', title: 'Customer', icon: 'person', class: '' },
   { path: '/stockin', title: 'Stock-In', icon: 'person', class: '' },
-  { path: '/sales', title: 'Sales', icon: 'sales', class: '' }
+  { path: '/sales', title: 'Sales', icon: 'sales', class: '' },
+  { path: '/expensescategory', title: 'Expenses Category', icon: 'category', class: '' },
+  { path: '/expensescategorylist', title: 'Expenses Category List', icon: 'category', class: '' },
 
 
 ];

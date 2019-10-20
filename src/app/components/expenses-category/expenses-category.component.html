@@ -1,0 +1,78 @@
+<div class="jumbotron">  
+  <div class="container">
+    <div *ngIf="expensesCategoryForm" class="row">
+      <div class="col-md-6 offset-md-3">
+        <h3>{{expensesCategoryId > 0 ? 'Edit' : 'Add'}} Expenses Category</h3>
+        <form [formGroup]="expensesCategoryForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <mat-form-field>
+                  <mat-select [attr.data-name]="'expensesType'" [formControlName]="'expensesType'" placeholder="Select Expenses Type">
+                      <mat-option [value]="">-- Select Expenses Type --</mat-option>
+                    <mat-option *ngFor="let item of expensesTypes" [value]="item.id">
+                      {{item.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <!-- <select formControlName="expensesType" class="form-control">
+                  <option value="">-- Select Expenses Type --</option>
+                  <option *ngFor="let item of expensesTypes" [value]="item.id" >{{item.name}}</option>
+                </select>
+                <div *ngIf="submitted && f.expensesType.errors" class="invalid-feedback">
+                  <div *ngIf="f.expensesType.errors.required">Expenses Type is required</div>
+                </div> -->
+              </div>
+
+          <div class="form-group">
+            <input type="text" formControlName="name" placeholder="Expenses Category Name" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.name.errors }" 
+              (keyup)="checkIsDuplicateName()" [attr.disabled] = "expensesCategoryId > 0 ? 'disabled' : null" />
+            <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+              <div *ngIf="f.name.errors.required">Expenses Category Name is required</div>
+            </div>
+            <div *ngIf="isDuplicateName" class="invalid-fieldvalue">
+                Expenses Category Name already exists
+            </div>
+          </div>  
+            
+          <div class="form-group">
+            <button class="btn btn-primary">Submit</button>
+            <button type="reset" class="btn btn-info ml-5" (click)="clear()">Clear</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div [class.hideMsg]="!showMsg" class="msgTransition">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="alert alert-info" role="alert" [innerHtml]="msg">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>  
+
+  <!-- <div class="row">
+    <div class="col-md-6">
+      <div class="border border-primary">
+        <h5>Expenses Categories - Vendor</h5>
+        <app-expenses-category-list [inExpensesTypeId]="expensesTypeId_Vendor"></app-expenses-category-list>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="border border-primary">
+        <h5>Expenses Categories - Commission Agent</h5>
+        <app-expenses-category-list [inExpensesTypeId]="expensesTypeId_CommissionAgent"></app-expenses-category-list>
+      </div>
+    </div>
+  </div> -->
+
+  <div class="col-md-12">
+    <div class="border border-primary p-2">
+      <h5>Expenses Categories List</h5>
+      <app-expenses-category-list [inIsChildComponet]="true"></app-expenses-category-list>
+    </div>
+  </div>
+</div>
+

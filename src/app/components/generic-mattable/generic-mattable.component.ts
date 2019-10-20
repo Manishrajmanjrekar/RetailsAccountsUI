@@ -22,7 +22,7 @@ export class GenericMatTableComponent implements OnInit {
   ngOnInit() {
     this.matTblDataSource = new MatTableDataSource(this.dataSource); 
     this.displayColumns = this.displayColInfo.map(x => x.field);
-    console.log(this.dataSource);
+    //console.log(this.dataSource);
   }
 
   ngAfterViewInit() {

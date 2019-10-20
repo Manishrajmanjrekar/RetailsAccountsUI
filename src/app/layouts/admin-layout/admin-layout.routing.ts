@@ -15,6 +15,8 @@ import { AddsalesComponent } from 'app/components/addsales/addsales.component';
 import { AppSalesComponent } from 'app/components/app-sales/app-sales.component';
 import { VendorListComponent } from 'app/components/vendor-list/vendor-list.component';
 import { CustomerListComponent } from 'app/components/customer-list/customer-list.component';
+import { ExpensesCategoryComponent } from 'app/components/expenses-category/expenses-category.component';
+import { ExpensesCategoryListComponent } from 'app/components/expenses-category-list/expenses-category-list.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -76,4 +78,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'customer/:id',   component: CustomerInfoComponent },
     { path: 'vendorlist',     component: VendorListComponent },
     { path: 'customerlist',     component: CustomerListComponent },
+    { path: 'expensescategory',     component: ExpensesCategoryComponent },
+    { path: 'expensescategorylist', component: ExpensesCategoryListComponent },
 ];
