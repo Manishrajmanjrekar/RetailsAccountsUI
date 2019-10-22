@@ -1,5 +1,5 @@
 export class VendorsModel {
-  id = 0;
+  id:number;
   nickName: string;
   firstName: string;
   middleName?: string;

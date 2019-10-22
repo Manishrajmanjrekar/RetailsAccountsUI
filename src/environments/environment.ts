@@ -4,6 +4,8 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
+ // accountApi: 'https://accountsapiservices20191012053353.azurewebsites.net/api/',
   accountApi: 'http://localhost:57956/api/',
+
   production: false
 };

@@ -1,39 +1,51 @@
-<div class="jumbotron">
-  <div class="container">
-    <h3>
-      Stockin List
-    </h3>
-    <br/>
 
-    <form [formGroup]="searchForm" (ngSubmit)="performSearch()">
-      <div class="row">
-        <div class="col-md-6">  
-         
-          <div class="form-group">
-            <input type="text" formControlName="stockinName" placeholder="Simple Name" class="form-control" 
-             [ngClass]="{ 'is-invalid': submitted && f.stockinName.errors }" />
-            <div *ngIf="submitted && f.stockinName.errors" class="invalid-feedback">
-                <div *ngIf="f.stockinName.errors.required">Simple Name is required</div>
-            </div>
-          </div>
 
-          <div class="form-group">
-            <input type="text" formControlName="vendorName" placeholder="Vendor Name" class="form-control" 
-             [ngClass]="{ 'is-invalid': submitted && f.vendorName.errors }" />
-            <div *ngIf="submitted && f.vendorName.errors" class="invalid-feedback">
-                <div *ngIf="f.vendorName.errors.required">Vendor Name is required</div>
-            </div>
-          </div>
+<div class="example-container mat-elevation-z8">
+    <mat-table #table [dataSource]="dataSource">
+  
+    
+      <ng-container matColumnDef="stockinId">
+        <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.stockinId}} </mat-cell>
+      </ng-container>
+  
+     
+      <ng-container matColumnDef="createdDate">
+        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.createdDate}} </mat-cell>
+      </ng-container>
+  
+     
+      <ng-container matColumnDef="simpleName">
+        <mat-header-cell *matHeaderCellDef> Weight </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.simpleName}} </mat-cell>
+      </ng-container>
+  
+      
+      <ng-container matColumnDef="vendor">
+        <mat-header-cell *matHeaderCellDef> Symbol </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.vendor}} </mat-cell>
+      </ng-container>
 
-          <div class="form-group">
-            <input type="submit" class="btn btn-primary" value="Search"/>
-          </div>
-        </div>
-      </div>
-    </form>
-    <br/>
-
-    <app-generic-table [dataSource]="dataSource" [displayColInfo]="displayColInfo">
-    </app-generic-table>
+      <ng-container matColumnDef="action">
+          <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+            <mat-cell *matCellDef="let element" fxLayoutGap="5px"> 
+                <button mat-mini-fab color="primary" (click)="UpdateData(element.stockinId)"  ><mat-icon>edit</mat-icon>
+                 
+                </button>
+                <!-- <a href="../stockin/?id={{element.stockinId}}" >Update</a> 
+                  routerLink="../stockin/?id=element.stockinId"
+                -->
+            </mat-cell>
+        </ng-container>
+  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  
+    <mat-paginator #paginator
+                   [pageSize]="10"
+                   [pageSizeOptions]="[5, 10, 20]">
+    </mat-paginator>
   </div>
-</div>
+  

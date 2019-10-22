@@ -17,6 +17,7 @@ import { VendorListComponent } from 'app/components/vendor-list/vendor-list.comp
 import { CustomerListComponent } from 'app/components/customer-list/customer-list.component';
 import { ExpensesCategoryComponent } from 'app/components/expenses-category/expenses-category.component';
 import { ExpensesCategoryListComponent } from 'app/components/expenses-category-list/expenses-category-list.component';
+import { StockinListComponent } from 'app/components/stockin-list/stockin-list.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -76,8 +77,10 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'sales',      component: AppSalesComponent },
     { path: 'vendor/:id',     component: VendorComponent },
     { path: 'customer/:id',   component: CustomerInfoComponent },
+    { path: 'stockin/:id',       component: StockinComponent },
     { path: 'vendorlist',     component: VendorListComponent },
     { path: 'customerlist',     component: CustomerListComponent },
+    { path: 'stockin-list',     component: StockinListComponent },
     { path: 'expensescategory',     component: ExpensesCategoryComponent },
     { path: 'expensescategorylist', component: ExpensesCategoryListComponent },
 ];

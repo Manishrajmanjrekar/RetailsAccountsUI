@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Component, OnInit } from '@angular/core';
-import { map, tap, catchError } from 'rxjs/operators';
+import { map, tap, catchError, count } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { CustomerModel } from 'Models/CustomerModel';
@@ -118,9 +118,41 @@ export class VendorService {
     return this.httpClient.get(this.APIEndpoint + url);
   }
 
-  public getVendorList(url: string): any {
-    console.log(this.APIEndpoint + url);
-    return this.httpClient.get(this.APIEndpoint + url);
+  public getStockIn_LoadNumberCount(url:string,vendorId:number,nickName:string):any{
+    // console.log(this.APIEndpoint + url)
+    // //number:count;
+     var data = JSON.stringify({Id:vendorId,NickName:nickName});
+
+     return this.httpClient.post(this.APIEndpoint + url,data,httpOptions);
+    // console.log('this.APIEndpoint + url '+data);
+
+  //  this.httpClient.post(this.APIEndpoint + url,data,httpOptions).subscribe(res => {
+  //   console.log('results from '+this.APIEndpoint + url+' '+res);
+  //   var count =  parseInt(res.toString());
+  //   console.log('results from '+this.APIEndpoint + url+':--- '+count);
+
+  //        return count;
+  //   }, (err: HttpErrorResponse) => {
+  //     console.log(err.error);
+  //     console.log(err.name);
+  //     console.log(err.message);
+  //     console.log(err.status);
+  //   });
+  }
+
+  public AddStock(url: string,data: string) {
+    console.log(this.APIEndpoint + url+' AddStock')
+    this.httpClient.post(this.APIEndpoint + url, data, httpOptions).subscribe(res => {
+      console.log('AddStock-----Success');
+      //console.log('res ' + this.test.firstName);
+
+
+    }, (err: HttpErrorResponse) => {
+      console.log(err.error);
+      console.log(err.name);
+      console.log(err.message);
+      console.log(err.status);
+    });
   }
   
 }

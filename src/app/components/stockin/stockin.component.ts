@@ -21,6 +21,10 @@ import {
 
 
 import { VendorComponent } from '../vendor/vendor.component';
+import { stringify } from '@angular/compiler/src/util';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
+import { StockinService } from 'Services/stockin.service';
 @Component({
   selector: 'app-stockin',
   templateUrl: './stockin.component.html',
@@ -37,11 +41,19 @@ export class StockinComponent implements OnInit {
   vendorNamesList: VendorsModel[];
   public githubAutoComplete$: Observable<VendorsModel[]> = null;
   public autoCompleteControl = new FormControl();
+  vendorId:number;
+  loadCount:string;
 
-  constructor(private formBuilder: FormBuilder, private vendorService: VendorService) {
+  
+
+  constructor(private formBuilder: FormBuilder, private vendorService: VendorService,
+              private activatedRoute: ActivatedRoute,private stockInService: StockinService) {
 
   }
 
+  changeClient(data){
+    alert("selected --->"+data.id);
+  }
 
   lookup(value: string): Observable<VendorsModel[]> {
     return this.vendorService.searchVendorNames(value.toLowerCase()).pipe(
@@ -61,6 +73,34 @@ export class StockinComponent implements OnInit {
         { id: 11, name: 'vendor2' }
       ];
 
+        // read route parameters
+        this.activatedRoute
+        .params
+        .subscribe(params => {
+          console.log('Regular Params:', params);          
+          if (params) 
+          {
+            var id = Number(params['id']) || 0;
+            console.log('query string id:-'+id)
+
+              // this.stockInService.StockById("api/StockIn/StockById",id).subscribe(res => {
+              //   console.log('results from StockById'+res);
+                
+               
+              //     }, (err: HttpErrorResponse) => {
+              //       console.log(err.error);
+              //       console.log(err.name);
+              //       console.log(err.message);
+              //       console.log(err.status);
+              //     });;
+
+
+
+
+          }
+
+        
+        });
 
     this.filteredOptions = this.vendorAutoComplete.valueChanges
       .pipe(
@@ -69,10 +109,13 @@ export class StockinComponent implements OnInit {
       );
 
     this.stockinForm = this.formBuilder.group({
-      vendor: ['', Validators.required, ],
-      simpleName: ['', Validators.required],
+     // vendor: ['', Validators.required, ],
+     NickName:  ['', Validators.required],
+      VendorId:  [''],
+
       createdDate: ['', [Validators.required, Validators]],
-      totalCount: [null, [Validators.required, Validators.min(1)]],
+      loadName:    ['', [Validators.required, Validators]],
+      TotalQuantity:  [null, [Validators.required, Validators.min(1)]],
     });
 
     this.githubAutoComplete$ = this.autoCompleteControl.valueChanges.pipe(
@@ -112,18 +155,62 @@ export class StockinComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     console.log('submitted true now.....')
-    // stop here if form is invalid
+   
+    this.stockinForm.controls['VendorId'].setValue(this.vendorId);
+
+    alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.stockinForm.value))
     if (this.stockinForm.invalid) {
+      console.log('this.stockinForm.invalid')
       return;
     }
 
-    alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.stockinForm.value))
+    
+    var data = JSON.stringify(this.stockinForm.value);
+
+    
+    var count = this.vendorService.AddStock("StockIn/AddStock",data)
+    
+
+
   }
 
 
-  SelectedOption(value) {
-    console.log('SelectedOption----' + value);
-    this.stockinForm.controls['simpleName'].setValue(value);
+  SelectedOption(value:VendorsModel) {
+    console.log('SelectedOption----' + value.id);
+    // var values= new String(value).split(":");
+    // console.log(values);
+    // var count ;
+    // this.stockinForm.controls['NickName'].setValue(values[0]);
+    // var nickName =this.stockinForm.controls['NickName'].value;
+    // this.vendorId =values[1];
+
+    // var values= new String(value).split(":");
+    // console.log(values);
+    var count ;
+    this.stockinForm.controls['NickName'].setValue(value.nickName);
+    var nickName =value.nickName;
+    this.vendorId = value.id;
+
+    //Load string to be appended to textbox.. below logic is for that..............................
+    var countdata =  this.vendorService.getStockIn_LoadNumberCount("StockIn/StockInCount",this.vendorId,value.nickName).subscribe(res => {
+      console.log('results from getStockIn_LoadNumberCount'+res);
+      
+       count =  parseInt(res.toString());
+       count = count + 1
+        console.log('count for number of records at stock in table:-'+ count);
+        this.stockinForm.controls['loadName'].setValue(nickName +'_Load'+count);
+
+
+        return count;
+        }, (err: HttpErrorResponse) => {
+          console.log(err.error);
+          console.log(err.name);
+          console.log(err.message);
+          console.log(err.status);
+        });;
+
+    
+
   }
 
 }

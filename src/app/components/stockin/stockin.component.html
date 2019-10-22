@@ -7,14 +7,19 @@
                   <mat-form-field>
                       <input [formControl]="autoCompleteControl" type="text" placeholder="Select Vendor"
                        aria-label="Number" matInput [matAutocomplete]="auto">
-                      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="SelectedOption($event.option.value)">
-                        <mat-option *ngFor="let item of githubAutoComplete$ | async; let index = index" [value]="item.lastName">
-                          {{ item.lastName | titlecase}}
+                      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" >
+                            <!-- (optionSelected)="SelectedOption($event)" -->
+                        <mat-option   *ngFor="let item of githubAutoComplete$ | async; let index = index" (onSelectionChange)="SelectedOption(item)" [value]="item.firstName">
+                          {{ item.firstName | titlecase}}
                         </mat-option>
                       </mat-autocomplete>
                     </mat-form-field>
-                </div>
 
+                    
+                </div>
+<div>
+    
+</div>
               <form [formGroup]="stockinForm" (ngSubmit)="onSubmit()">
                     
                   <!-- <div class="form-group">
@@ -29,9 +34,9 @@
                   </div> -->
                   <div class="form-group">
                       <!--<label>Simple Name</label>-->
-                      <input type="text" formControlName="simpleName" placeholder="Simple Name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.simpleName.errors }" />
-                      <div *ngIf="submitted && f.simpleName.errors" class="invalid-feedback">
-                          <div *ngIf="f.simpleName.errors.required">Simple Name is required</div>
+                      <input type="text" formControlName="NickName" placeholder="nick Name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.NickName.errors }" />
+                      <div *ngIf="submitted && f.NickName.errors" class="invalid-feedback">
+                          <div *ngIf="f.NickName.errors.required">Nick Name is required</div>
                       </div>
                   </div>
                   <div class="form-group">
@@ -43,12 +48,20 @@
                 </div>
                 <div class="form-group">
                     <!--<label>Total Count</label>-->
-                    <input type="number" formControlName="totalCount" placeholder="Total Count" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.totalCount.errors }" />
-                    <div *ngIf="submitted && f.totalCount.errors" class="invalid-feedback">
-                        <div *ngIf="f.totalCount.errors.required">Total Count is required</div>
-                        <div *ngIf="f.totalCount.errors.min">Invalid Total Count</div>
+                    <input type="number" formControlName="TotalQuantity" placeholder="Total Count" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.TotalQuantity.errors }" />
+                    <div *ngIf="submitted && f.TotalQuantity.errors" class="invalid-feedback">
+                        <div *ngIf="f.TotalQuantity.errors.required">Total Count is required</div>
+                        <div *ngIf="f.TotalQuantity.errors.min">Invalid Total Count</div>
                     </div>
                 </div>
+                <div class="form-group">
+                        <!--<label>Total Count</label>-->
+                        <input type="text" formControlName="loadName" placeholder="load Name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.loadName.errors }" />
+                        
+                      <div *ngIf="submitted && f.loadName.errors" class="invalid-feedback">
+                          <div *ngIf="f.loadName.errors.required">loadName Name is required</div>
+                      </div>
+                    </div>
                 <div class="form-group">
                     <button class="btn btn-primary">Submit</button>
                 </div>
