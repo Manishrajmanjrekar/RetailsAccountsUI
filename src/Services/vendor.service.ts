@@ -154,5 +154,10 @@ export class VendorService {
       console.log(err.status);
     });
   }
+
+  public getVendorList(url: string): any {
+    console.log(this.APIEndpoint + url);
+    return this.httpClient.get(this.APIEndpoint + url);
+  }
   
 }

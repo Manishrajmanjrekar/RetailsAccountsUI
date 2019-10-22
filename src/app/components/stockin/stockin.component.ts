@@ -83,16 +83,29 @@ export class StockinComponent implements OnInit {
             var id = Number(params['id']) || 0;
             console.log('query string id:-'+id)
 
-              // this.stockInService.StockById("api/StockIn/StockById",id).subscribe(res => {
-              //   console.log('results from StockById'+res);
+              this.stockInService.StockById("StockIn/StockById",id).subscribe(res => {
+                console.log('results from StockById'+res);
                 
-               
-              //     }, (err: HttpErrorResponse) => {
-              //       console.log(err.error);
-              //       console.log(err.name);
-              //       console.log(err.message);
-              //       console.log(err.status);
-              //     });;
+
+                 this.autoCompleteControl.setValue(res.firstName);
+                 
+                this.stockinForm = this.formBuilder.group({
+                  // vendor: ['', Validators.required, ],
+                  NickName:  [res.nickName, Validators.required],
+                   VendorId:  [res.vendorId],
+             
+                   createdDate: [res.createdDate, [Validators.required, Validators]],
+                   loadName:    [res.loadName, [Validators.required, Validators]],
+                   TotalQuantity:  [res.TotalQuantity, [Validators.required, Validators.min(1)]],
+                 });
+
+
+                  }, (err: HttpErrorResponse) => {
+                    console.log(err.error);
+                    console.log(err.name);
+                    console.log(err.message);
+                    console.log(err.status);
+                  });;
 
 
 

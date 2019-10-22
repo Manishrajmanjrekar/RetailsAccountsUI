@@ -28,7 +28,7 @@ export class StockinService {
   }
 
   public StockById(url: string,id:number): any {
-    console.log(this.APIEndpoint + url);
+    console.log(this.APIEndpoint + url+id);
     var data:string = JSON.stringify(id);
     return this.httpClient.post(this.APIEndpoint + url,data,httpOptions);
   }
