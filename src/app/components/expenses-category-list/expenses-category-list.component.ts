@@ -1,8 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { VendorService } from 'Services/vendor.service';
+import { CommonService } from 'Services/common-service';
 import { UIModel } from 'Models/UIModel';
-import { VendorsModel } from 'Models/VendorsModel';
 
 @Component({
   selector: 'app-expenses-category-list',
@@ -13,7 +12,7 @@ export class ExpensesCategoryListComponent implements OnInit {
   @Input() inExpensesTypeId: number = 0;
   @Input() inIsChildComponet: boolean = false;
   
-  _vendorService: VendorService;
+  _commonService: CommonService;
   public searchForm: FormGroup;
   public submitted: boolean = false;
   public dataSource: UIModel.ExpensesCategoryModel[];
@@ -21,14 +20,14 @@ export class ExpensesCategoryListComponent implements OnInit {
   allExpensesCategories: UIModel.ExpensesCategoryModel[];
   expensesTypes:any[];
 
-  constructor(private fb: FormBuilder, private vendorService: VendorService) {
-    this._vendorService = vendorService;
+  constructor(private fb: FormBuilder, private commonService: CommonService) {
+    this._commonService = commonService;
   }
 
   ngOnInit() {
     this.searchForm = this.fb.group({
       expensesCategoryName: [''],
-      expensesType: ['']
+      expensesTypeId: [this.inExpensesTypeId > 0 ? this.inExpensesTypeId : '']
     });
 
     this.displayColInfo = [
@@ -37,24 +36,29 @@ export class ExpensesCategoryListComponent implements OnInit {
     ];
 
     console.log('getting expenses types..');
-      this.expensesTypes = this.enumSelector(UIModel.ExpensesTypeEnum);
-      //this.expensesTypes = UIModel.ExpensesTypes;
-      console.log(this.expensesTypes);
+    this._commonService.get('ExpensesTypes')
+    .subscribe((result: UIModel.ExpensesTypeModel[]) => {
+      console.log('fetched ExpensesTypes successfully');      
+      this.expensesTypes = result;
+    }, error => console.error(error)); 
 
-    /*this._vendorService.getVendorList('Vendor')
-      .subscribe((result: VendorsModel[]) => {*/
-        console.log('fetched unfiltered list successfully');
-        //this.allExpensesCategories = result;
-        this.allExpensesCategories = UIModel.ExpensesCategories.filter(item => item.expensesTypeId == (this.inExpensesTypeId > 0 ? this.inExpensesTypeId : item.expensesTypeId));
-        for (let item of this.allExpensesCategories) {
-          item.url = '#/expensescategory/' + item.id;
-        }
-        this.dataSource = this.allExpensesCategories;
-    /*}, error => console.error(error));           
-    } */ 
+    this.getExpensesCategories();    
   }
 
   get f(){ return this.searchForm.controls};
+
+  getExpensesCategories() {
+    this._commonService.get('expensescategory')
+    .subscribe((result: UIModel.ExpensesCategoryModel[]) => {
+      console.log('fetched unfiltered list successfully'); 
+      this.allExpensesCategories = result;  
+      for (let item of this.allExpensesCategories) {
+        item.url = '#/expensescategory/' + item.id;
+      }  
+      
+      this.filterData();
+    }, error => console.error(error));
+  }
 
   performSearch(){
     console.log('performSearch invoked');
@@ -64,10 +68,14 @@ export class ExpensesCategoryListComponent implements OnInit {
       return;
     }
 
+    this.getExpensesCategories();
+  }
+
+  filterData() {
     this.dataSource =  this.allExpensesCategories;
     // filter data
     let filterVal = this.searchForm.value.expensesCategoryName;
-    let filterExpensesTypeId = this.searchForm.value.expensesType;
+    let filterExpensesTypeId = this.searchForm.value.expensesTypeId;
     if (filterVal != undefined && filterVal != '') {
       this.dataSource =  this.dataSource.filter(
         item => (item.name.toLowerCase().indexOf(filterVal.toLowerCase()) !== -1)
@@ -76,17 +84,11 @@ export class ExpensesCategoryListComponent implements OnInit {
     if (filterExpensesTypeId > 0) {
       this.dataSource =  this.dataSource.filter(
         item => item.expensesTypeId == filterExpensesTypeId
-      )};  
-
+      )
+    };  
+      
     console.log(filterVal);
     console.log(filterExpensesTypeId);
     console.log('filtered list..');
   }
-
-  enumSelector(definition) {
-    return Object.keys(definition)
-      .filter(key => isNaN(Number(key)) === true)
-      .map(key => ({ id: definition[key], name: key }));
-  }
-
 }

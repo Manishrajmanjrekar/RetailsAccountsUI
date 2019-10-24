@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators, FormControlDirective, FormControlName } from '@angular/forms';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { CustomerService } from 'Services/customer.service';
+import { CommonService } from 'Services/common-service';
 import { UIModel } from 'Models/UIModel';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -16,14 +16,14 @@ const httpOptions = {
   templateUrl: './expenses-category.component.html',
   styleUrls: ['./expenses-category.component.css']
 })
-export class ExpensesCategoryComponent implements OnInit {
+export class ExpensesCategoryComponent implements OnInit {ng  
 expensesTypeId_Vendor: number = UIModel.ExpensesTypeEnum.Vendor;
 expensesTypeId_CommissionAgent: number = UIModel.ExpensesTypeEnum.CommissionAgent;
 
     expensesCategoryForm: FormGroup;
     submitted = false;
     headers: Headers;
-    _expensesCategoryService: CustomerService;
+    _commonService: CommonService;
     isParamRouteInvoked = false;
     isDuplicateName = false;
     expensesCategoryId = 0;
@@ -31,10 +31,11 @@ expensesTypeId_CommissionAgent: number = UIModel.ExpensesTypeEnum.CommissionAgen
     expensesTypes:any[];
     msg = '';
     showMsg = false;
+    defaultExpenseTypeId = UIModel.ExpensesTypeEnum.Vendor;
   
     constructor(private formBuilder: FormBuilder, private router: Router, private activatedRoute: ActivatedRoute,
-      private httpClient: HttpClient, private expensesCategoryService: CustomerService) {
-      this._expensesCategoryService = expensesCategoryService;
+      private httpClient: HttpClient, private commonService: CommonService) {
+      this._commonService = commonService;
     }
   
     ngOnInit() {
@@ -53,9 +54,11 @@ expensesTypeId_CommissionAgent: number = UIModel.ExpensesTypeEnum.CommissionAgen
       };    
 
       console.log('getting expenses types..');
-      this.expensesTypes = this.enumSelector(UIModel.ExpensesTypeEnum);
-      //this.expensesTypes = UIModel.ExpensesTypes;
-      console.log(this.expensesTypes);
+      this._commonService.get('ExpensesTypes')
+      .subscribe((result: UIModel.ExpensesTypeModel[]) => {
+        console.log('fetched ExpensesTypes successfully');      
+        this.expensesTypes = result;
+      }, error => console.error(error));
 
       // read route parameters
       this.activatedRoute
@@ -101,7 +104,7 @@ expensesTypeId_CommissionAgent: number = UIModel.ExpensesTypeEnum.CommissionAgen
 
       this.expensesCategoryForm = this.formBuilder.group({
         name: [this.expensesCategoryDetails.name, Validators.required],
-        expensesType: ['', Validators.required]
+        expensesTypeId: [this.defaultExpenseTypeId > 0 ? this.defaultExpenseTypeId : '', Validators.required]
       });
 
       setTimeout(() => {      
@@ -122,7 +125,7 @@ expensesTypeId_CommissionAgent: number = UIModel.ExpensesTypeEnum.CommissionAgen
   
       // stop if duplicate Name
       console.log('Add expensesCategory checking for Duplicate Name')
-      // this.checkIsDuplicateName();
+      this.checkIsDuplicateName();
       console.log(this.isDuplicateName);
   
       if (this.isDuplicateName) {
@@ -130,32 +133,32 @@ expensesTypeId_CommissionAgent: number = UIModel.ExpensesTypeEnum.CommissionAgen
         return;
       }
   
-      const data = JSON.stringify(this.expensesCategoryForm.value);
-      alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.expensesCategoryForm.value));
-      return;
-  
+      //const data = JSON.stringify(this.expensesCategoryForm.value);
+      //alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.expensesCategoryForm.value));
+      
       this.expensesCategoryDetails = <UIModel.ExpensesCategoryModel>(this.expensesCategoryForm.value);
       this.expensesCategoryDetails.id = this.expensesCategoryId;
-      /*
-      this._expensesCategoryService.saveExpensesCategory(this.expensesCategoryDetails, 'ExpensesCategory/SaveExpensesCategory')
-        .subscribe((response: UIModel.ResponseInfo) => {
-          console.log('response', response);
-          console.log(response.isSuccess);
-          if (response.isSuccess) {
-            this.expensesCategoryDetails.id = response.recordId;
-            this.expensesCategoryId = response.recordId;
-            this.showMsgAlert('ExpensesCategory details saved successfully.', 2000);
-          } else {
-            this.showMsgAlert('Failed to save ExpensesCategory details. Please try again.', 2000);
-          }
-        })
-      */
+      
+      this._commonService.post(this.expensesCategoryDetails, 'ExpensesCategory/SaveExpensesCategory')
+      .subscribe((response: UIModel.ResponseInfo) => {
+        console.log('response', response);
+        console.log(response.isSuccess);
+        if (response.isSuccess) {
+          //this.expensesCategoryDetails.id = response.recordId;
+          //this.expensesCategoryId = response.recordId;
+          this.clear();
+          this.showMsgAlert('ExpensesCategory details saved successfully.', 2000);
+        } else {
+          this.showMsgAlert('Failed to save ExpensesCategory details. Please try again.', 2000);
+        }
+      })
+      
     }  
   
     getExpensesCategoryDetails() {
-      /*if (this.expensesCategoryId > 0) {
-        this._expensesCategoryService.getExpensesCategory('ExpensesCategory/' + this.expensesCategoryId)
-          .subscribe((result: ExpensesCategoryModel) => {
+      if (this.expensesCategoryId > 0) {
+        this._commonService.get('ExpensesCategory/' + this.expensesCategoryId)
+          .subscribe((result: UIModel.ExpensesCategoryModel) => {
             this.expensesCategoryDetails = result;
   
             if (this.expensesCategoryDetails && this.expensesCategoryDetails.id > 0) {
@@ -165,7 +168,7 @@ expensesTypeId_CommissionAgent: number = UIModel.ExpensesTypeEnum.CommissionAgen
               this.showMsgAlert(msg, 0);
             }
           }, error => console.error(error));
-      }*/
+      }
     }
   
     showMsgAlert(msg: string, timeInterval: number) {
@@ -182,23 +185,22 @@ expensesTypeId_CommissionAgent: number = UIModel.ExpensesTypeEnum.CommissionAgen
   
     checkIsDuplicateName() {
       console.log('checkIsDuplicateName raised');
-      let nameEntered: string = JSON.stringify(this.expensesCategoryForm.value.name);
+      let nameEntered: string = this.expensesCategoryForm.value.name;
+      let filterExpensesTypeId = Number(this.expensesCategoryForm.value.expensesTypeId);
       console.log(nameEntered);
-  
-      this.isDuplicateName = false;
-      if (this.expensesCategoryForm.value.name == "abc")
-      {
-        console.log('duplicate found');
-        this.isDuplicateName = true;
-      }
-      return;
 
-      if (nameEntered != null && nameEntered.length > 1) {
-        this._expensesCategoryService.checkIsDuplicateNickName(nameEntered, 'ExpensesCategory/CheckIsDuplicateNickName')
+      if (nameEntered != null && nameEntered.length > 0 && filterExpensesTypeId > 0) {
+        const inputData = {
+          name: nameEntered,
+          expensesTypeId: filterExpensesTypeId,
+          id: this.expensesCategoryId
+        }
+        var jsonInput = JSON.stringify(inputData);
+        this._commonService.post(jsonInput, 'ExpensesCategory/CheckIsDuplicate')
           .subscribe((data: boolean) => {
           this.isDuplicateName = data;
             console.log(this.isDuplicateName);
-          });
+          }, error => console.error(error));
       }
     }
 
@@ -216,6 +218,7 @@ expensesTypeId_CommissionAgent: number = UIModel.ExpensesTypeEnum.CommissionAgen
         this.isDuplicateName = false;
 
         this.expensesCategoryForm.reset();    
+        this.createFormGroup();
         this.setElementfocusByIndex(0);
       }
     }
@@ -225,11 +228,5 @@ expensesTypeId_CommissionAgent: number = UIModel.ExpensesTypeEnum.CommissionAgen
       console.log('setting focus on element ' + index);
       let firstElement = <any>this.expensesCategoryForm.get(Object.keys(this.expensesCategoryForm.controls)[index]);
       if (firstElement.nativeElement) firstElement.nativeElement.focus();
-    }  
-    
-    enumSelector(definition) {
-      return Object.keys(definition)
-        .filter(key => isNaN(Number(key)) === true)
-        .map(key => ({ id: definition[key], name: key }));
-    }
+    } 
   }

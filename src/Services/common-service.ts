@@ -39,6 +39,14 @@ export class CommonService {
   //     );
   // }
 
+  public get(url: string): any {
+    console.log(this.APIEndpoint + url);
+    return this.httpClient.get(this.APIEndpoint + url);
+  }
 
+  public post(data: any, url: string): any {
+    console.log(this.APIEndpoint + url);
+    return this.httpClient.post(this.APIEndpoint + url, data, httpOptions);
+  } 
 
 }

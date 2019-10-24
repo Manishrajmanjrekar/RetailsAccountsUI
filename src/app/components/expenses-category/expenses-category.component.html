@@ -6,26 +6,26 @@
         <form [formGroup]="expensesCategoryForm" (ngSubmit)="onSubmit()">
             <div class="form-group">
                 <mat-form-field>
-                  <mat-select [attr.data-name]="'expensesType'" [formControlName]="'expensesType'" placeholder="Select Expenses Type">
-                      <mat-option [value]="">-- Select Expenses Type --</mat-option>
+                  <mat-select [attr.data-name]="'expensesTypeId'" [formControlName]="'expensesTypeId'" placeholder="Select Expenses Type">
+                      <!-- <mat-option [value]="">-- Select Expenses Type --</mat-option> -->
                     <mat-option *ngFor="let item of expensesTypes" [value]="item.id">
                       {{item.name}}
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
-                <!-- <select formControlName="expensesType" class="form-control">
+                <!-- <select formControlName="expensesTypeId" class="form-control">
                   <option value="">-- Select Expenses Type --</option>
                   <option *ngFor="let item of expensesTypes" [value]="item.id" >{{item.name}}</option>
                 </select>
-                <div *ngIf="submitted && f.expensesType.errors" class="invalid-feedback">
-                  <div *ngIf="f.expensesType.errors.required">Expenses Type is required</div>
+                <div *ngIf="submitted && f.expensesTypeId.errors" class="invalid-feedback">
+                  <div *ngIf="f.expensesTypeId.errors.required">Expenses Type is required</div>
                 </div> -->
               </div>
 
           <div class="form-group">
             <input type="text" formControlName="name" placeholder="Expenses Category Name" class="form-control"
               [ngClass]="{ 'is-invalid': submitted && f.name.errors }" 
-              (keyup)="checkIsDuplicateName()" [attr.disabled] = "expensesCategoryId > 0 ? 'disabled' : null" />
+              (keyup)="checkIsDuplicateName()"/>
             <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
               <div *ngIf="f.name.errors.required">Expenses Category Name is required</div>
             </div>
@@ -71,8 +71,8 @@
   <div class="col-md-12">
     <div class="border border-primary p-2">
       <h5>Expenses Categories List</h5>
-      <app-expenses-category-list [inIsChildComponet]="true"></app-expenses-category-list>
+      <app-expenses-category-list [inIsChildComponet]="true" [inExpensesTypeId]="expensesTypeId_Vendor"></app-expenses-category-list>
     </div>
   </div>
 </div>
-
+ 
