@@ -118,33 +118,33 @@ export class VendorService {
     return this.httpClient.get(this.APIEndpoint + url);
   }
 
-  public getStockIn_LoadNumberCount(url:string,vendorId:number,nickName:string):any{
+  public getStockIn_LoadNumberCount(url: string, vendorId: number, nickName: string): any {
     // console.log(this.APIEndpoint + url)
     // //number:count;
-     var data = JSON.stringify({Id:vendorId,NickName:nickName});
+    const data = JSON.stringify({ Id: vendorId, NickName: nickName });
 
-     return this.httpClient.post(this.APIEndpoint + url,data,httpOptions);
+    return this.httpClient.post(this.APIEndpoint + url, data, httpOptions);
     // console.log('this.APIEndpoint + url '+data);
 
-  //  this.httpClient.post(this.APIEndpoint + url,data,httpOptions).subscribe(res => {
-  //   console.log('results from '+this.APIEndpoint + url+' '+res);
-  //   var count =  parseInt(res.toString());
-  //   console.log('results from '+this.APIEndpoint + url+':--- '+count);
+    //  this.httpClient.post(this.APIEndpoint + url,data,httpOptions).subscribe(res => {
+    //   console.log('results from '+this.APIEndpoint + url+' '+res);
+    //   var count =  parseInt(res.toString());
+    //   console.log('results from '+this.APIEndpoint + url+':--- '+count);
 
-  //        return count;
-  //   }, (err: HttpErrorResponse) => {
-  //     console.log(err.error);
-  //     console.log(err.name);
-  //     console.log(err.message);
-  //     console.log(err.status);
-  //   });
+    //        return count;
+    //   }, (err: HttpErrorResponse) => {
+    //     console.log(err.error);
+    //     console.log(err.name);
+    //     console.log(err.message);
+    //     console.log(err.status);
+    //   });
   }
 
-  public AddStock(url: string,data: string) {
-    console.log(this.APIEndpoint + url+' AddStock')
+  public AddStock(url: string, data: string) {
+    console.log(this.APIEndpoint + url + ' AddStock')
     this.httpClient.post(this.APIEndpoint + url, data, httpOptions).subscribe(res => {
       console.log('AddStock-----Success');
-      //console.log('res ' + this.test.firstName);
+      // console.log('res ' + this.test.firstName);
 
 
     }, (err: HttpErrorResponse) => {
@@ -159,5 +159,5 @@ export class VendorService {
     console.log(this.APIEndpoint + url);
     return this.httpClient.get(this.APIEndpoint + url);
   }
-  
+
 }
