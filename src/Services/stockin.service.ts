@@ -10,6 +10,7 @@ import { environment } from 'environments/environment';
 import { VendorsModel } from 'Models/VendorsModel';
 
 import { Observable, of } from 'rxjs';
+import { StockInLoad } from 'Models/StockInLoad';
 
 const httpOptions = {
     headers: new HttpHeaders({
@@ -32,4 +33,25 @@ export class StockinService {
         const data: string = JSON.stringify(id);
         return this.httpClient.post(this.APIEndpoint + url, data, httpOptions);
     }
+
+  public searchLoadNames(url:string,query: string): Observable<StockInLoad[]> {
+    console.log(this.APIEndpoint + url+'query:-'+query);
+
+    return this.httpClient
+      .post<StockInLoad[]>(this.APIEndpoint + url, {
+        q: query, sort: 'stars', order: 'desc'
+
+      })
+      .pipe(
+        map(res => {
+          return res;
+        },
+          catchError(_ => {
+            return of(null);
+          })
+        ))
+  }
+
+
+
 }

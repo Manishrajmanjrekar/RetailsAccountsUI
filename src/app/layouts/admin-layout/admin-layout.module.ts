@@ -42,6 +42,8 @@ import {
 import { AddsalesComponent } from 'app/components/addsales/addsales.component';
 import { AppSalesComponent } from 'app/components/app-sales/app-sales.component';
 import { StockinListComponent } from 'app/components/stockin-list/stockin-list.component';
+import { CustomerpaymentComponent } from 'app/components/customerpayment/customerpayment.component';
+import { VendorpaymentComponent } from 'app/components/vendorpayment/vendorpayment.component';
 
 
 @NgModule({
@@ -86,7 +88,9 @@ import { StockinListComponent } from 'app/components/stockin-list/stockin-list.c
     GenericMatTableComponent,
     ExpensesCategoryComponent,
     ExpensesCategoryListComponent,
- StockinListComponent
+ StockinListComponent,
+ VendorpaymentComponent,
+ CustomerpaymentComponent
   ]
 })
 

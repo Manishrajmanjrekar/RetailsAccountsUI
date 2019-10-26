@@ -16,9 +16,8 @@ import { CustomerpaymentComponent } from './customerpayment/customerpayment.comp
   declarations: [
     FooterComponent,
     NavbarComponent,
-    SidebarComponent,
-    VendorpaymentComponent,
-    CustomerpaymentComponent
+    SidebarComponent
+   
   ],
   exports: [
     FooterComponent,

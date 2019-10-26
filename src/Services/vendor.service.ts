@@ -84,12 +84,9 @@ export class VendorService {
     });
   }
 
-  public searchVendorNames(query: string): Observable<VendorsModel[]> {
-    // const url = 'https://api.github.com/search/repositories';
-    const url = 'http://localhost:57956/api/Vendor/VendorNames';
-
+  public searchVendorNames(url:string,query: string): Observable<VendorsModel[]> {
     return this.httpClient
-      .post<VendorsModel[]>(url, {
+      .post<VendorsModel[]>(this.APIEndpoint + url, {
         q: query, sort: 'stars', order: 'desc'
 
       })
@@ -119,26 +116,41 @@ export class VendorService {
   }
 
   public getStockIn_LoadNumberCount(url: string, vendorId: number, nickName: string): any {
-    // console.log(this.APIEndpoint + url)
-    // //number:count;
     const data = JSON.stringify({ Id: vendorId, NickName: nickName });
-
     return this.httpClient.post(this.APIEndpoint + url, data, httpOptions);
-    // console.log('this.APIEndpoint + url '+data);
+   
+  }
 
+  public getSalesByStockId(url:string,stockInId:string):any{
+    var data:string = JSON.stringify(stockInId);
+   
+    console.log(this.APIEndpoint + url+' getSalesByStockId:-'+data)
+    return this.httpClient.post(this.APIEndpoint + url,data,httpOptions);
+ }
     //  this.httpClient.post(this.APIEndpoint + url,data,httpOptions).subscribe(res => {
     //   console.log('results from '+this.APIEndpoint + url+' '+res);
     //   var count =  parseInt(res.toString());
     //   console.log('results from '+this.APIEndpoint + url+':--- '+count);
 
+ public getExpensesByStockId(url:string,stockInId:string):any{
+  var data:string = JSON.stringify(stockInId);
+ 
+  console.log(this.APIEndpoint + url+' getExpensesByStockId:-'+data)
+  return this.httpClient.post(this.APIEndpoint + url,data,httpOptions);
+}
     //        return count;
     //   }, (err: HttpErrorResponse) => {
     //     console.log(err.error);
     //     console.log(err.name);
     //     console.log(err.message);
     //     console.log(err.status);
+<<<<<<< .mine
     //   });
   }
+=======
+
+
+>>>>>>> .theirs
 
   public AddStock(url: string, data: string) {
     console.log(this.APIEndpoint + url + ' AddStock')

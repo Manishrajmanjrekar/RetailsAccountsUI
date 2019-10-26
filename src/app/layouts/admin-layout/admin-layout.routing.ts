@@ -18,6 +18,8 @@ import { CustomerListComponent } from 'app/components/customer-list/customer-lis
 import { ExpensesCategoryComponent } from 'app/components/expenses-category/expenses-category.component';
 import { ExpensesCategoryListComponent } from 'app/components/expenses-category-list/expenses-category-list.component';
 import { StockinListComponent } from 'app/components/stockin-list/stockin-list.component';
+import { VendorpaymentComponent } from 'app/components/vendorpayment/vendorpayment.component';
+import { CustomerpaymentComponent } from 'app/components/customerpayment/customerpayment.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -83,4 +85,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'stockin-list',     component: StockinListComponent },
     { path: 'expensescategory',     component: ExpensesCategoryComponent },
     { path: 'expensescategorylist', component: ExpensesCategoryListComponent },
+    { path: 'vendorpayment',     component: VendorpaymentComponent },
+    { path: 'customerpayment', component: CustomerpaymentComponent },
 ];

@@ -56,7 +56,7 @@ export class StockinComponent implements OnInit {
   }
 
   lookup(value: string): Observable<VendorsModel[]> {
-    return this.vendorService.searchVendorNames(value.toLowerCase()).pipe(
+    return this.vendorService.searchVendorNames('Vendor/VendorNames',value.toLowerCase()).pipe(
       // map the item property of the github results as our return object
       map(results => results),
       // catch errors
@@ -189,15 +189,7 @@ export class StockinComponent implements OnInit {
 
   SelectedOption(value: VendorsModel) {
     console.log('SelectedOption----' + value.id);
-    // var values= new String(value).split(":");
-    // console.log(values);
-    // var count ;
-    // this.stockinForm.controls['NickName'].setValue(values[0]);
-    // var nickName =this.stockinForm.controls['NickName'].value;
-    // this.vendorId =values[1];
-
-    // var values= new String(value).split(":");
-    // console.log(values);
+    
     let count;
     this.stockinForm.controls['NickName'].setValue(value.nickName);
     const nickName = value.nickName;
