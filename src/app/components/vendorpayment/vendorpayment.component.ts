@@ -46,6 +46,8 @@ export class VendorpaymentComponent implements OnInit {
   public submitted: boolean = false;
   public VendorExpensesdataSource: StockInLoad[];
   public VendorExpensesdisplayColInfo: UIModel.ColumnInfo[];
+ public TotalLoadAmount:number;
+ public TotalLoadExpensesAmount:number;
 
   public accountsAutoComplete$: Observable<VendorsModel[]> = null;
   public autoCompleteControl = new FormControl();
@@ -120,14 +122,16 @@ export class VendorpaymentComponent implements OnInit {
     //var nickName=value.VendorId;
    
     this.stockId =JSON.stringify(value.StockInId);
-
+ 
     //Load Sales grid data as per the Stock Id or LoadId..............................
     var countdata =  this.vendorService.getSalesByStockId("Sales/SalesByStockId",this.stockId).subscribe(res => {
       console.log('results from getSalesByStockId'+res);
       this.allStockInLoad=res;
       this.dataSource = res;
 
-      
+      this.TotalLoadAmount = res.reduce((prev, cur) => prev + cur.Price, 0);
+       
+       console.log('TotalLoadAmount:-'+this.TotalLoadAmount);
       
         }, (err: HttpErrorResponse) => {
           console.log(err.error);
@@ -140,7 +144,9 @@ export class VendorpaymentComponent implements OnInit {
     var countdata =  this.vendorService.getExpensesByStockId("VendorExpenses/VendorExpensesByStockInId",this.stockId).subscribe(res => {
       console.log('results from getExpensesByStockId'+res);
       this.VendorExpensesdataSource = res;
-
+      this.TotalLoadExpensesAmount = res.reduce((prev, cur) => prev + cur.Amount, 0);
+       
+      console.log('TotalLoadExpensesAmount:-'+this.TotalLoadExpensesAmount);
       
       
         }, (err: HttpErrorResponse) => {

@@ -96,7 +96,7 @@ export class AppSalesComponent implements OnInit {
   }
 
   lookup(value: string): Observable<VendorsModel[]> {
-    return this.vendorService.searchVendorNames(value.toLowerCase()).pipe(
+    return this.vendorService.searchVendorNames("","").pipe(
       // map the item property of the github results as our return object
       map(results => results),
       // catch errors
