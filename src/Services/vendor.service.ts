@@ -84,7 +84,7 @@ export class VendorService {
     });
   }
 
-  public searchVendorNames(url:string,query: string): Observable<VendorsModel[]> {
+  public searchVendorNames(url: string, query: string): Observable<VendorsModel[]> {
     return this.httpClient
       .post<VendorsModel[]>(this.APIEndpoint + url, {
         q: query, sort: 'stars', order: 'desc'
@@ -118,25 +118,25 @@ export class VendorService {
   public getStockIn_LoadNumberCount(url: string, vendorId: number, nickName: string): any {
     const data = JSON.stringify({ Id: vendorId, NickName: nickName });
     return this.httpClient.post(this.APIEndpoint + url, data, httpOptions);
-   
+
   }
 
-  public getSalesByStockId(url:string,stockInId:string):any{
-    var data:string = JSON.stringify(stockInId);
-   
-    console.log(this.APIEndpoint + url+' getSalesByStockId:-'+data)
-    return this.httpClient.post(this.APIEndpoint + url,data,httpOptions);
- }
-    
+  public getSalesByStockId(url: string, stockInId: string): any {
+    const data: string = JSON.stringify(stockInId);
 
- public getExpensesByStockId(url:string,stockInId:string):any{
-  var data:string = JSON.stringify(stockInId);
- 
-  console.log(this.APIEndpoint + url+' getExpensesByStockId:-'+data)
-  return this.httpClient.post(this.APIEndpoint + url,data,httpOptions);
-}
-  
-  
+    console.log(this.APIEndpoint + url + ' getSalesByStockId:-' + data)
+    return this.httpClient.post(this.APIEndpoint + url, data, httpOptions);
+  }
+
+
+  public getExpensesByStockId(url: string, stockInId: string): any {
+    const data: string = JSON.stringify(stockInId);
+
+    console.log(this.APIEndpoint + url + ' getExpensesByStockId:-' + data)
+    return this.httpClient.post(this.APIEndpoint + url, data, httpOptions);
+  }
+
+
 
   public AddStock(url: string, data: string) {
     console.log(this.APIEndpoint + url + ' AddStock')
