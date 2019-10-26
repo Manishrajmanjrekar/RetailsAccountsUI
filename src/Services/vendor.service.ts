@@ -127,10 +127,7 @@ export class VendorService {
     console.log(this.APIEndpoint + url+' getSalesByStockId:-'+data)
     return this.httpClient.post(this.APIEndpoint + url,data,httpOptions);
  }
-    //  this.httpClient.post(this.APIEndpoint + url,data,httpOptions).subscribe(res => {
-    //   console.log('results from '+this.APIEndpoint + url+' '+res);
-    //   var count =  parseInt(res.toString());
-    //   console.log('results from '+this.APIEndpoint + url+':--- '+count);
+    
 
  public getExpensesByStockId(url:string,stockInId:string):any{
   var data:string = JSON.stringify(stockInId);
@@ -138,19 +135,8 @@ export class VendorService {
   console.log(this.APIEndpoint + url+' getExpensesByStockId:-'+data)
   return this.httpClient.post(this.APIEndpoint + url,data,httpOptions);
 }
-    //        return count;
-    //   }, (err: HttpErrorResponse) => {
-    //     console.log(err.error);
-    //     console.log(err.name);
-    //     console.log(err.message);
-    //     console.log(err.status);
-<<<<<<< .mine
-    //   });
-  }
-=======
-
-
->>>>>>> .theirs
+  
+  
 
   public AddStock(url: string, data: string) {
     console.log(this.APIEndpoint + url + ' AddStock')
