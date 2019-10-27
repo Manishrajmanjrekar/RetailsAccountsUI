@@ -4,6 +4,7 @@ import { VendorsModel } from 'Models/VendorsModel';
 import { Observable, of } from 'rxjs';
 import { startWith, debounceTime, switchMap, map } from 'rxjs/operators';
 import { VendorService } from 'Services/vendor.service';
+import { MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-sales',
@@ -15,8 +16,8 @@ export class AppSalesComponent implements OnInit {
   // tslint:disable-next-line:variable-name
 
   _ref: any;
-  public sales: Sale;
-  public newSales: Sale[] = [];
+  public sale: Sale;
+  public addedSales: Sale[] = [];
   public selectedStockIns:  string[]
   public selectedStockIn: string;
   public githubAutoComplete$: Observable<VendorsModel[]> = null;
@@ -26,6 +27,9 @@ export class AppSalesComponent implements OnInit {
    {stockName: 'Load-prashanth', Quantity: 100},
    {stockName: 'Load-manish', Quantity: 200},
   ];
+  public displayColInfo: any[];
+  displayedColumns = ['vendorNames', 'customerNames', 'Price', 'Quantity', 'Total', 'action'];
+  dataSource = new MatTableDataSource<Sale>(this.addedSales);
 
   constructor(private vendorService: VendorService) {
 
@@ -36,19 +40,18 @@ export class AppSalesComponent implements OnInit {
   }
   ngOnInit() {
     this.selectedStockIns = this.stockIns;
-    this.sales = new Sale();
-    this.sales.vendorNames = [
-      { id: 1, name: 'rams' },
-      { id: 2, name: 'ganesha....' },
+    // this.sales = new Sale();
+    // this.sales.vendorNames = [
+    //   { id: 1, name: 'rams' },
+    //   { id: 2, name: 'ganesha....' },
 
-    ];
-    this.sales.customerNames = [
-      { id: 1, name: 'rams' },
-      { id: 2, name: 'ganesha....' },
+    // ];
+    // this.sales.customerNames = [
+    //   { id: 1, name: 'rams' },
+    //   { id: 2, name: 'ganesha....' },
 
-    ];
-    const saledata = new Sale();
-    this.newSales.push(saledata);
+    // ];
+    this.sale = new Sale();
 
     this.githubAutoComplete$ = this.autoCompleteControl.valueChanges.pipe(
       startWith(''),
@@ -67,23 +70,36 @@ export class AppSalesComponent implements OnInit {
     );
   }
   save() {
-    alert('Saved Successfully!');
+    // alert('Saved Successfully!');
+    if (this.sale.customerNames) {
+    const sales = new Sale();
+    sales.vendorNames = this.sale.stockName;
+    sales.customerNames = this.sale.customerNames;
+    sales.Price = this.sale.Price;
+    sales.Quantity = this.sale.Quantity;
+    sales.Total = this.sale.Total;
+    this.addedSales.push(sales);
+    this.dataSource = new MatTableDataSource<Sale>(this.addedSales);
+    this.sale = new Sale();
+    }
   }
 
-  addComponent() {
-    const saledata = new Sale();
-      this.newSales.push(saledata);
-  }
+  // addComponent() {
+  //   const saledata = new Sale();
+  //     this.newSales.push(saledata);
+  // }
 
   calculate(event, sale: Sale) {
     sale.Total = sale.Price * sale.Quantity;
   }
 
-  removeSale(event, index) {
-    if (confirm('Are you sure to remove the sale?')) {
-      this.newSales.splice(index, 1);
-    }
-  }
+  // removeSale(event, index) {
+  //   if (confirm('Are you sure to remove the sale?')) {
+  //     this.newSales.splice(index, 1);
+  //   }
+  // }
+
+  SelectedOption() {}
 
   onKey(value) {
     console.log(this.selectedStockIn);
@@ -96,7 +112,7 @@ export class AppSalesComponent implements OnInit {
   }
 
   lookup(value: string): Observable<VendorsModel[]> {
-    return this.vendorService.searchVendorNames("","").pipe(
+    return this.vendorService.searchVendorNames('/Vendor/VendorNames', value.toLowerCase()).pipe(
       // map the item property of the github results as our return object
       map(results => results),
       // catch errors
@@ -108,10 +124,11 @@ export class AppSalesComponent implements OnInit {
 }
 
 export class Sale {
-  public vendorNames: Array<any>;
-  public customerNames: Array<any>;
+  public vendorNames: string;
+  public customerNames: string;
   public Price: number;
   public Quantity: number;
   public Total: number;
+  stockName: string;
 
 }

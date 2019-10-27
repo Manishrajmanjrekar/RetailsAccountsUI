@@ -2,7 +2,7 @@
   <div class="container" style="margin-top: 100px;">
 
       
-  <div class="row" *ngFor="let sale of newSales; let i=index">
+  <div class="row">
     
       <div class="col-sm">
           <!-- <select [(ngModel)]="vendorname" name="somename">
@@ -10,21 +10,21 @@
           </select> -->
             <mat-form-field>
               <mat-label>Stock In's</mat-label>
-              <mat-select [(ngModel)]="selectedStockIn" name="stockin-dwn">
-                <input (keyup)="onKey($event.target.value)" name="mat-dropdown-search">
+              <mat-select [(ngModel)]="sale.stockName" name="stockin-dwn{{i}}">
+                <input (keyup)="onKey($event.target.value)" name="mat-dropdown-search{{i}}">
                 <mat-option>None</mat-option>
-                <mat-option *ngFor="let stockIn of selectedStockIns" [value]="stockIn.Quantity">{{stockIn.stockName}}</mat-option>
+                <mat-option *ngFor="let stockIn of selectedStockIns" [value]="stockIn.stockName">{{stockIn.stockName}}</mat-option>
               </mat-select>
             </mat-form-field>
          
        </div>
        <div class="col-sm">
           <mat-form-field>
-              <input [formControl]="autoCompleteControl" type="text" placeholder="Select Vendor"
+              <input [formControl]="autoCompleteControl" [(ngModel)]="sale.customerNames" type="text" placeholder="Select Vendor"
                aria-label="Number" matInput [matAutocomplete]="auto">
               <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="SelectedOption($event.option.value)">
-                <mat-option *ngFor="let item of githubAutoComplete$ | async; let index = index" [value]="item.lastName">
-                  {{ item.lastName | titlecase}}
+                <mat-option *ngFor="let item of githubAutoComplete$ | async; let index = index" [value]="item.firstName">
+                  {{ item.firstName | titlecase}}
                 </mat-option>
               </mat-autocomplete>
             </mat-form-field>
@@ -56,11 +56,67 @@
                     </i></a>
        </div>
      </div>
-     <button type="button" 
+     <!-- <button type="button" 
       (click)="addComponent()"
-      class="btn btn-primary">Add Row </button>
+      class="btn btn-primary">Add Row </button> -->
       <button type="submit" class="btn btn-primary"
       (click)="save()" > Save</button>
 
   </div>
 </form>
+
+
+
+<div class="example-container mat-elevation-z8">
+  <mat-table #table [dataSource]="dataSource">
+
+  
+    <ng-container matColumnDef="vendorNames">
+      <mat-header-cell *matHeaderCellDef>Vendor Name </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.vendorNames}} </mat-cell>
+    </ng-container>
+
+   
+    <ng-container matColumnDef="customerNames">
+      <mat-header-cell *matHeaderCellDef> Customer Name </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.customerNames}} </mat-cell>
+    </ng-container>
+
+   
+    <ng-container matColumnDef="Price">
+      <mat-header-cell *matHeaderCellDef> Price </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.Price}} </mat-cell>
+    </ng-container>
+
+    
+    <ng-container matColumnDef="Quantity">
+      <mat-header-cell *matHeaderCellDef> Quantity </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.Quantity}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Total">
+      <mat-header-cell *matHeaderCellDef> Total </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.Total}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+        <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+          <mat-cell *matCellDef="let element" fxLayoutGap="5px"> 
+              <button mat-mini-fab color="primary" (click)="UpdateData(element.stockinId)"  ><mat-icon>edit</mat-icon>
+               
+              </button>
+              <!-- <a href="../stockin/?id={{element.stockinId}}" >Update</a> 
+                routerLink="../stockin/?id=element.stockinId"
+              -->
+          </mat-cell>
+      </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <mat-paginator #paginator
+                 [pageSize]="10"
+                 [pageSizeOptions]="[5, 10, 20]">
+  </mat-paginator>
+</div>
