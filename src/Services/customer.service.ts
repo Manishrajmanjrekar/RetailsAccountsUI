@@ -5,7 +5,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { CustomerModel } from 'Models/CustomerModel';
 import { environment } from 'environments/environment';
-
+import { Observable, of } from 'rxjs';
+import { map, tap, catchError, count } from 'rxjs/operators';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':  'application/json'
@@ -81,5 +82,36 @@ export class CustomerService {
     console.log(this.APIEndpoint + url);
     return this.httpClient.get(this.APIEndpoint + url);
   }
+
+  public searchCustomerNames(url:string,query: string): Observable<CustomerModel[]> {
+    return this.httpClient
+      .post<CustomerModel[]>(this.APIEndpoint + url, {
+        q: query, sort: 'stars', order: 'desc'
+
+      })
+      .pipe(
+        map(res => {
+          return res;
+        },
+          catchError(_ => {
+            return of(null);
+          })
+        ))
+  }
+
+  public getCustomerPurchasedItems(url:string,customerId:string):any{
+    var data:string = JSON.stringify(customerId);
+   
+    console.log(this.APIEndpoint + url+' getCustomerPUrchasedItems:-'+data)
+    return this.httpClient.post(this.APIEndpoint + url,data,httpOptions);
+ }
+
+ public CustomerAmountPaid(url:string,customerId:string):any{
+  var data:string = JSON.stringify(customerId);
+ 
+  console.log(this.APIEndpoint + url+' CustomerAmountPaid:-'+data)
+  return this.httpClient.post(this.APIEndpoint + url,data,httpOptions);
+}
+
 
 }

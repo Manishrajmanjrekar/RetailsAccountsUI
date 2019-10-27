@@ -20,6 +20,7 @@ import { ExpensesCategoryListComponent } from 'app/components/expenses-category-
 import { StockinListComponent } from 'app/components/stockin-list/stockin-list.component';
 import { VendorpaymentComponent } from 'app/components/vendorpayment/vendorpayment.component';
 import { CustomerpaymentComponent } from 'app/components/customerpayment/customerpayment.component';
+import { SalesListComponent } from 'app/components/Sales/sales-list/sales-list.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -87,4 +88,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'expensescategorylist', component: ExpensesCategoryListComponent },
     { path: 'vendorpayment',     component: VendorpaymentComponent },
     { path: 'customerpayment', component: CustomerpaymentComponent },
+   // { path: 'sales-list', component: SalesListComponent },
+
+    
 ];

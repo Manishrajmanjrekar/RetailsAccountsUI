@@ -44,6 +44,8 @@ import { AppSalesComponent } from 'app/components/app-sales/app-sales.component'
 import { StockinListComponent } from 'app/components/stockin-list/stockin-list.component';
 import { CustomerpaymentComponent } from 'app/components/customerpayment/customerpayment.component';
 import { VendorpaymentComponent } from 'app/components/vendorpayment/vendorpayment.component';
+import { SalesListComponent } from 'app/components/Sales/sales-list/sales-list.component';
+import { SalesEditComponent } from 'app/components/Sales/sales-edit/sales-edit.component';
 
 
 @NgModule({
@@ -90,7 +92,9 @@ import { VendorpaymentComponent } from 'app/components/vendorpayment/vendorpayme
     ExpensesCategoryListComponent,
  StockinListComponent,
  VendorpaymentComponent,
- CustomerpaymentComponent
+ CustomerpaymentComponent,
+ SalesListComponent,
+ SalesEditComponent
   ]
 })
 

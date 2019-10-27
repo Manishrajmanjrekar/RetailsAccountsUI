@@ -1,3 +1,74 @@
 <p>
   customerpayment works!
 </p>
+<div class="jumbotron">
+    <div class="container">
+        <h3>Customer Payment Infomation</h3>
+      <form [formGroup]="customerpaymentForm" (ngSubmit)="performSearch()">
+      <div class="row">
+        <div class="col-md-10">
+         
+            <div class="form-group">
+                <mat-form-field>
+                    <input [formControl]="autoCompleteControl" type="text" placeholder="Type Vendor Load name"
+                     aria-label="Number" matInput [matAutocomplete]="auto">
+                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" >
+                         
+                      <mat-option   *ngFor="let item of accountsAutoComplete$ | async; let index = index" 
+                      (onSelectionChange)="SelectedOption(item)" [value]="item.firstName">
+                        {{ item.firstName }}
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+              </div>
+            
+  
+             
+                   
+                    <div class="form-group">
+                      <input type="text" formControlName="CustomerName" placeholder="search by Customer Name" class="form-control" 
+                       [ngClass]="{ 'is-invalid': submitted && f.CustomerName.errors }" />
+                      <div *ngIf="submitted && f.CustomerName.errors" class="invalid-feedback">
+                          <div *ngIf="f.CustomerName.errors.required">Customer Name is required</div>
+                      </div>
+                    </div>
+                    <!-- <div class="form-group">
+                      <input type="submit" class="btn btn-primary" value="Search"/>
+                    </div> -->
+                 
+  
+            
+  
+            <div>
+              <div>Customer Purchased Items</div>
+                <app-generic-mattable [dataSource]="SalesdataSource" [displayColInfo]="SalesdisplayColInfo"></app-generic-mattable>
+                <div>Total Sales Amount:- {{TotalSalesAmount}} </div>
+            </div>
+
+            <div>
+                <div>Customer Amount Paid List</div>
+                  <app-generic-mattable [dataSource]="CustomerAmountPaidList" [displayColInfo]="CustomerPaymentdisplayColInfo"></app-generic-mattable>
+                <div>Customer Paid Amount:- {{CustomerPaidAmount}} </div>
+
+              </div>
+              <div><b>Balance Due:- {{BalanceDue}} </b></div>
+            <div class="form-group">
+              <button class="btn btn-primary">Submit</button>
+              <button type="reset" class="btn btn-info ml-5" (click)="clear()">Clear</button>
+            </div>
+         
+        </div>
+      </div>
+    </form>
+
+      <div [class.hideMsg]="!showMsg" class="msgTransition">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="alert alert-info" role="alert" [innerHtml]="msg">
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
