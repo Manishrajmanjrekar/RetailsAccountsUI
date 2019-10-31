@@ -32,12 +32,15 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppSalesComponent } from './components/app-sales/app-sales.component';
 import { VendorService } from 'Services/vendor.service';
 import { CustomerService } from 'Services/customer.service';
-import { MatAutocompleteModule,MatSortModule,
+import {
+  MatAutocompleteModule, MatSortModule,
   MatTableModule,
-  MatTabsModule } from '@angular/material';
-import {  CommonService } from 'Services/common-service';
+  MatTabsModule
+} from '@angular/material';
+import { CommonService } from 'Services/common-service';
 import { StockinService } from 'Services/stockin.service';
-//import { StockInlistComponent } from './stock-inlist/stock-inlist.component';
+import { SalesService } from 'Services/sales-service';
+// import { StockInlistComponent } from './stock-inlist/stock-inlist.component';
 
 @NgModule({
   imports: [
@@ -55,8 +58,8 @@ import { StockinService } from 'Services/stockin.service';
     HttpClientModule,
     MatAutocompleteModule,
     MatSortModule,
-  MatTableModule,
-  MatTabsModule,
+    MatTableModule,
+    MatTabsModule,
     AgmCoreModule.forRoot({
       apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
     })
@@ -64,7 +67,7 @@ import { StockinService } from 'Services/stockin.service';
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    
+
     // VendorComponent,
     // StockinComponent,
     // VendorListComponent,
@@ -75,7 +78,7 @@ import { StockinService } from 'Services/stockin.service';
     // SalesEditComponent
 
   ],
-  providers: [VendorService, CustomerService, CommonService,StockinService],
+  providers: [VendorService, CustomerService, CommonService, StockinService],
   bootstrap: [AppComponent]
   // entryComponents : [AppSalesComponent]
 })

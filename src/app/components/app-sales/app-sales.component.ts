@@ -28,7 +28,7 @@ export class AppSalesComponent implements OnInit {
    {stockName: 'Load-manish', Quantity: 200},
   ];
   public displayColInfo: any[];
-  displayedColumns = ['vendorNames', 'customerNames', 'Price', 'Quantity', 'Total', 'action'];
+  displayedColumns = ['vendorNames', 'stockName', 'Price', 'Quantity', 'Total', 'action'];
   dataSource = new MatTableDataSource<Sale>(this.addedSales);
 
   constructor(private vendorService: VendorService) {
@@ -71,17 +71,26 @@ export class AppSalesComponent implements OnInit {
   }
   save() {
     // alert('Saved Successfully!');
-    if (this.sale.customerNames) {
+    if (this.sale.vendorNames) {
     const sales = new Sale();
-    sales.vendorNames = this.sale.stockName;
-    sales.customerNames = this.sale.customerNames;
+    sales.stockName = this.sale.stockName;
+    sales.vendorNames = this.sale.vendorNames;
     sales.Price = this.sale.Price;
     sales.Quantity = this.sale.Quantity;
     sales.Total = this.sale.Total;
     this.addedSales.push(sales);
     this.dataSource = new MatTableDataSource<Sale>(this.addedSales);
     this.sale = new Sale();
+
     }
+  }
+
+  cancel() {
+    this.sale = new Sale();
+  }
+
+  UpdateData(sale) {
+    this.sale = sale;
   }
 
   // addComponent() {
@@ -129,6 +138,6 @@ export class Sale {
   public Price: number;
   public Quantity: number;
   public Total: number;
-  stockName: string;
+  public stockName: string;
 
 }

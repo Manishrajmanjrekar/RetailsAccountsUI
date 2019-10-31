@@ -9,8 +9,8 @@ import { Observable, of } from 'rxjs';
 import { map, tap, catchError, count } from 'rxjs/operators';
 const httpOptions = {
   headers: new HttpHeaders({
-    'Content-Type':  'application/json'
-    //'Authorization': 'my-auth-token'
+    'Content-Type': 'application/json'
+    // 'Authorization': 'my-auth-token'
   })
 };
 
@@ -20,21 +20,20 @@ const httpOptions = {
 export class CustomerService {
   test = new CustomerModel();
   APIEndpoint = environment.accountApi;
-  
-  
 
-  constructor(private httpClient: HttpClient,private formBuilder: FormBuilder) {
-   
-   }
-  
-  public getContacts(url:string,)
-  {
-    
-    console.log('customerinfo Service call---'+this.APIEndpoint+url);
-    this.httpClient.get(this.APIEndpoint+url).subscribe(
+
+
+  constructor(private httpClient: HttpClient, private formBuilder: FormBuilder) {
+
+  }
+
+  public getContacts(url: string, ) {
+
+    console.log('customerinfo Service call---' + this.APIEndpoint + url);
+    this.httpClient.get(this.APIEndpoint + url).subscribe(
       res => {
-        this.test.firstName =res["firstName"];
-        console.log('res customer get call---- :-'+ this.test.firstName);
+        this.test.firstName = res['firstName'];
+        console.log('res customer get call---- :-' + this.test.firstName);
       },
       (err: HttpErrorResponse) => {
         console.log(err.error);
@@ -46,13 +45,13 @@ export class CustomerService {
 
   }
 
-  public AddCustomer(data: string,url:string) {
-   //data is after stringfy of formdata........
-    //this.AddCustomer(data);
-    //var url = 'http://localhost:54436/api/Customer/AddCustomer';
-    this.httpClient.post(this.APIEndpoint+url, data, httpOptions).subscribe(res => {
+  public AddCustomer(data: string, url: string) {
+    // data is after stringfy of formdata........
+    // this.AddCustomer(data);
+    // var url = 'http://localhost:54436/api/Customer/AddCustomer';
+    this.httpClient.post(this.APIEndpoint + url, data, httpOptions).subscribe(res => {
 
-      this.test.firstName = res["firstName"];
+      this.test.firstName = res['firstName'];
       console.log('res ' + this.test.firstName);
 
     }, (err: HttpErrorResponse) => {
@@ -83,7 +82,7 @@ export class CustomerService {
     return this.httpClient.get(this.APIEndpoint + url);
   }
 
-  public searchCustomerNames(url:string,query: string): Observable<CustomerModel[]> {
+  public searchCustomerNames(url: string, query: string): Observable<CustomerModel[]> {
     return this.httpClient
       .post<CustomerModel[]>(this.APIEndpoint + url, {
         q: query, sort: 'stars', order: 'desc'
@@ -99,19 +98,19 @@ export class CustomerService {
         ))
   }
 
-  public getCustomerPurchasedItems(url:string,customerId:string):any{
-    var data:string = JSON.stringify(customerId);
-   
-    console.log(this.APIEndpoint + url+' getCustomerPUrchasedItems:-'+data)
-    return this.httpClient.post(this.APIEndpoint + url,data,httpOptions);
- }
+  public getCustomerPurchasedItems(url: string, customerId: string): any {
+    const data: string = JSON.stringify(customerId);
 
- public CustomerAmountPaid(url:string,customerId:string):any{
-  var data:string = JSON.stringify(customerId);
- 
-  console.log(this.APIEndpoint + url+' CustomerAmountPaid:-'+data)
-  return this.httpClient.post(this.APIEndpoint + url,data,httpOptions);
-}
+    console.log(this.APIEndpoint + url + ' getCustomerPUrchasedItems:-' + data)
+    return this.httpClient.post(this.APIEndpoint + url, data, httpOptions);
+  }
+
+  public CustomerAmountPaid(url: string, customerId: string): any {
+    const data: string = JSON.stringify(customerId);
+
+    console.log(this.APIEndpoint + url + ' CustomerAmountPaid:-' + data)
+    return this.httpClient.post(this.APIEndpoint + url, data, httpOptions);
+  }
 
 
 }
