@@ -6,6 +6,7 @@ declare interface RouteInfo {
   title: string;
   icon: string;
   class: string;
+  childItems?: RouteInfo[];
 }
 export const ROUTES: RouteInfo[] = [
   // { path: '/dashboard', title: 'Dashboard', icon: 'dashboard', class: '' },
@@ -16,7 +17,7 @@ export const ROUTES: RouteInfo[] = [
   // { path: '/maps', title: 'Maps', icon: 'location_on', class: '' },
   // { path: '/notifications', title: 'Notifications', icon: 'notifications', class: '' },
   // { path: '/upgrade', title: 'Upgrade to PRO', icon: 'unarchive', class: 'active-pro' },
-  { path: '/vendorlist', title: 'Vendor List', icon: 'people', class: '' },
+  /*{ path: '/vendorlist', title: 'Vendor List', icon: 'people', class: '' },
   { path: '/vendor', title: 'Vendor', icon: 'person', class: '' },
   { path: '/customerlist', title: 'Customer List', icon: 'people', class: '' },
   { path: '/customer', title: 'Customer', icon: 'person', class: '' },
@@ -26,10 +27,38 @@ export const ROUTES: RouteInfo[] = [
   { path: '/expensescategorylist', title: 'Expenses Category List', icon: 'category', class: '' },
   { path: '/stockin-list', title: 'StockList', icon: 'StockList', class: '' },
   { path: '/vendorpayment', title: 'vendorpayment', icon: 'person', class: '' },
-  { path: '/customerpayment', title: 'customerpayment', icon: 'person', class: '' }
+  { path: '/customerpayment', title: 'customerpayment', icon: 'person', class: '' },*/
 
+  { path: '', title: 'Vendor', icon: 'people', class: '',
+    childItems: 
+    [ 
+      { path: '/vendorlist', title: 'Vendor List', icon: 'people', class: '' },
+      { path: '/vendor', title: 'Vendor', icon: 'person', class: '' },
+      { path: '/vendorpayment', title: 'Vendor Payment', icon: 'person', class: '' },
+    ]
+  },
 
+  { path: '', title: 'Customer', icon: 'person', class: '',
+    childItems: 
+    [ 
+      { path: '/customerlist', title: 'Customer List', icon: 'people', class: '' },
+      { path: '/customer', title: 'Customer', icon: 'person', class: '' },
+      { path: '/customerpayment', title: 'Customer Payment', icon: 'person', class: '' },
+    ]
+  },
+
+  { path: '', title: 'Stock-In', icon: 'Stock', class: '',
+    childItems: 
+    [ 
+      { path: '/stockin-list', title: 'StockList', icon: 'Stock', class: '' },
+      { path: '/stockin', title: 'Stock-In', icon: 'person', class: '' },
+    ]
+  },
+ 
+  { path: '/sales', title: 'Sales', icon: 'sales', class: '' },
+  { path: '/expensescategory', title: 'Expenses Category', icon: 'category', class: '' },
 ];
+
 
 @Component({
   selector: 'app-sidebar',

@@ -55,11 +55,38 @@
     </ul>
   </div>
     <ul class="nav">
-        <li routerLinkActive="active" *ngFor="let menuItem of menuItems" class="{{menuItem.class}} nav-item">
+        <!-- <li routerLinkActive="active" *ngFor="let menuItem of menuItems" class="{{menuItem.class}} nav-item">
             <a class="nav-link" [routerLink]="[menuItem.path]">
                 <i class="material-icons">{{menuItem.icon}}</i>
                 <p>{{menuItem.title}}</p>
             </a>
+        </li> -->
+
+        <li routerLinkActive="active" *ngFor="let menuItem of menuItems; let i = index" class="{{menuItem.class}} nav-item">
+            <a *ngIf="!(menuItem.childItems?.length > 0)" class="nav-link" [routerLink]="[menuItem.path]">
+                <i class="material-icons">{{menuItem.icon}}</i>
+                <p>{{menuItem.title}}</p>
+            </a>
+
+            <a *ngIf="menuItem.childItems?.length > 0" class="nav-link collapsibleMenu" data-toggle="collapse" 
+                href="#menuitem_{{i}}">
+                <i class="material-icons">{{menuItem.icon}}</i>
+                <p>
+                    <b>{{menuItem.title}}</b> 
+                    <b class="caret"></b>
+                </p>
+            </a>
+            <div *ngIf="menuItem.childItems?.length > 0" class="collapse collapsibleMenu" 
+                id="menuitem_{{i}}">
+                <ul class="nav">
+                    <li routerLinkActive="active" *ngFor="let childMenuItem of menuItem.childItems" class="{{childMenuItem.class}} nav-item">
+                        <a class="nav-link" [routerLink]="[childMenuItem.path]">
+                            <i class="material-icons">{{childMenuItem.icon}}</i>
+                            <p>{{childMenuItem.title}}</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </li>
     </ul>
 </div>
