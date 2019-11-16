@@ -37,7 +37,7 @@ export class CustomerListComponent implements OnInit {
       { field: 'address', header: 'Address' },
     ];
 
-    this._customerService.getCustomerList('Customer')
+    this._customerService.getCustomerList('Customer/GetAllCustomers')
       .subscribe((result: CustomerModel[]) => {
         console.log('fetched unfiltered list successfully');
         this.allCustomers = result;

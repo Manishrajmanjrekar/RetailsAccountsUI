@@ -74,12 +74,12 @@ export class CustomerService {
 
   public getCustomer(url: string): any {
     console.log(this.APIEndpoint + url);
-    return this.httpClient.get(this.APIEndpoint + url);
+    return this.httpClient.post(this.APIEndpoint + url,  httpOptions);
   }
 
   public getCustomerList(url: string): any {
     console.log(this.APIEndpoint + url);
-    return this.httpClient.get(this.APIEndpoint + url);
+    return this.httpClient.post(this.APIEndpoint + url, httpOptions);
   }
 
   public searchCustomerNames(url: string, query: string): Observable<CustomerModel[]> {

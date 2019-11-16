@@ -204,6 +204,7 @@ export class StockinComponent implements OnInit {
       count = parseInt(res.toString());
       count = count + 1
       console.log('count for number of records at stock in table:-' + count);
+      let date: Date = new Date();
       this.stockinForm.controls['loadName'].setValue(nickName + '_Load' + count);
 
 

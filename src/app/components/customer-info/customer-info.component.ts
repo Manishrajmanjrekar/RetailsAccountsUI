@@ -137,18 +137,24 @@ export class CustomerInfoComponent implements OnInit {
       // this.checkIsDuplicateNickName();
       console.log(this.isDuplicateNickName);
   
-      if (this.isDuplicateNickName) {
-        return;
-      }
+      // if (this.isDuplicateNickName) {
+      //   return;
+      // }
   
       const data = JSON.stringify(this.customerForm.value);
-      // alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.customerForm.value));
+       alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.customerForm.value));
       // this._customerService.AddCustomer(data,'Customer/AddCustomer');
   
       this.customerDetails = <CustomerModel>(this.customerForm.value);
       this.customerDetails.id = this.customerId;
+
+      let postUrl = 'Customer/PostCustomer';
+      if (this.customerId > 0)
+      {
+        postUrl = 'Customer/UpdateCustomer'
+      }
   
-      this._customerService.saveCustomer(this.customerDetails, 'Customer/SaveCustomer')
+      this._customerService.saveCustomer(this.customerDetails, postUrl)
         .subscribe((response: UIModel.ResponseInfo) => {
           console.log('response', response);
           console.log(response.isSuccess);
@@ -164,7 +170,7 @@ export class CustomerInfoComponent implements OnInit {
   
     getCustomerDetails() {
       if (this.customerId > 0) {
-        this._customerService.getCustomer('Customer/' + this.customerId)
+        this._customerService.getCustomer('Customer/GetCustomerById?id=' + this.customerId)
           .subscribe((result: CustomerModel) => {
             this.customerDetails = result;
   
@@ -196,7 +202,7 @@ export class CustomerInfoComponent implements OnInit {
       console.log(nickNameEntered);
   
       this.isDuplicateNickName = false;
-      if (nickNameEntered != null && nickNameEntered.length > 1) {
+      if (nickNameEntered != null && nickNameEntered.trim().length > 1) {
         this._customerService.checkIsDuplicateNickName(nickNameEntered, 'Customer/CheckIsDuplicateNickName')
           .subscribe((data: boolean) => {
           this.isDuplicateNickName = data;
