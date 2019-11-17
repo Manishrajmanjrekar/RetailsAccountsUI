@@ -38,7 +38,7 @@ export class VendorListComponent implements OnInit {
       { field: 'address', header: 'Address' },
     ];
 
-    this._vendorService.getVendorList('Vendor')
+    this._vendorService.getVendorList('Vendor/GetAllVendors')
       .subscribe((result: VendorsModel[]) => {
         console.log('fetched unfiltered list successfully');
         this.allVendors = result;

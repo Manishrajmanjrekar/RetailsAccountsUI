@@ -5,8 +5,7 @@
 
 export const environment = {
  //accountApi: 'https://accountsapiservices20191012053353.azurewebsites.net/api/',
- // accountApi: 'http://localhost:57956/api/',
-  accountApi: 'https://localhost:44379/api/',
+ accountApi: 'http://localhost:57956/api/',
 
 
   production: false

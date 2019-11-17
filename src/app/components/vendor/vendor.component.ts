@@ -175,14 +175,21 @@ export class VendorComponent implements OnInit {
 
     this.vendorDetails = <VendorsModel>(this.vendorForm.value);
     this.vendorDetails.id = this.vendorId;
+    let postUrl = 'Vendor/SaveVendor';
+    if (this.vendorId > 0)
+    {
+      postUrl = 'Vendor/UpdateVendor'
+    }
 
-    this._vendorService.saveVendor(this.vendorDetails, 'Vendor/SaveVendor')
+    this._vendorService.saveVendor(this.vendorDetails, postUrl)
       .subscribe((response: UIModel.ResponseInfo) => {
         console.log('response', response);
         console.log(response.isSuccess);
         if (response.isSuccess) {
-          this.vendorDetails.id = response.recordId;
-          this.vendorId = response.recordId;
+          if (response.recordId > 0) {
+            this.vendorDetails.id = response.recordId;
+            this.vendorId = response.recordId;
+          }
           this.showMsgAlert('Vendor details saved successfully.', 2000);
         } else {
           this.showMsgAlert('Failed to save Vendor details. Please try again.', 2000);
@@ -193,7 +200,7 @@ export class VendorComponent implements OnInit {
 
   getVendorDetails() {
     if (this.vendorId > 0) {
-      this._vendorService.getVendor('Vendor/' + this.vendorId)
+      this._vendorService.getVendor('Vendor/GetVendorById?id=' + this.vendorId)
         .subscribe((result: VendorsModel) => {
           this.vendorDetails = result;
 
@@ -221,11 +228,11 @@ export class VendorComponent implements OnInit {
 
   checkIsDuplicateNickName() {
     console.log('onNickNameChange raised');
-    const nickNameEntered: string = JSON.stringify(this.vendorForm.value.nickName);
+    const nickNameEntered: string = this.vendorForm.value.nickName;
     console.log(nickNameEntered);
 
     this.isDuplicateNickName = false;
-    if (nickNameEntered != null && nickNameEntered.length > 1) {
+    if (!this.isNullOrWhiteSpace(nickNameEntered)) {
       this._vendorService.checkIsDuplicateNickName(nickNameEntered, 'Vendor/CheckIsDuplicateNickName')
         .subscribe((data: boolean) => {
         this.isDuplicateNickName = data;
@@ -263,5 +270,10 @@ export class VendorComponent implements OnInit {
     let firstElement = <any>this.vendorForm.get(Object.keys(this.vendorForm.controls)[index]);
     if (firstElement.nativeElement) firstElement.nativeElement.focus();
   }
+
+  isNullOrWhiteSpace(value: string) {
+    if (value == null || value == undefined || value == '') return true;    
+    return value.replace(/\s/g, '').length == 0;
+  }  
 
 }

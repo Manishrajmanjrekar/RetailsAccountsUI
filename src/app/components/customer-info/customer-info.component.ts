@@ -142,13 +142,12 @@ export class CustomerInfoComponent implements OnInit {
       // }
   
       const data = JSON.stringify(this.customerForm.value);
-       alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.customerForm.value));
-      // this._customerService.AddCustomer(data,'Customer/AddCustomer');
+      //alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.customerForm.value));
   
       this.customerDetails = <CustomerModel>(this.customerForm.value);
       this.customerDetails.id = this.customerId;
 
-      let postUrl = 'Customer/PostCustomer';
+      let postUrl = 'Customer/SaveCustomer';
       if (this.customerId > 0)
       {
         postUrl = 'Customer/UpdateCustomer'
@@ -159,8 +158,10 @@ export class CustomerInfoComponent implements OnInit {
           console.log('response', response);
           console.log(response.isSuccess);
           if (response.isSuccess) {
-            this.customerDetails.id = response.recordId;
-            this.customerId = response.recordId;
+            if (response.recordId > 0) {
+              this.customerDetails.id = response.recordId;
+              this.customerId = response.recordId;
+            }
             this.showMsgAlert('Customer details saved successfully.', 2000);
           } else {
             this.showMsgAlert('Failed to save Customer details. Please try again.', 2000);
@@ -198,11 +199,11 @@ export class CustomerInfoComponent implements OnInit {
   
     checkIsDuplicateNickName() {
       console.log('onNickNameChange raised');
-      const nickNameEntered: string = JSON.stringify(this.customerForm.value.nickName);
+      const nickNameEntered: string = this.customerForm.value.nickName;
       console.log(nickNameEntered);
   
       this.isDuplicateNickName = false;
-      if (nickNameEntered != null && nickNameEntered.trim().length > 1) {
+      if (!this.isNullOrWhiteSpace(nickNameEntered)) {
         this._customerService.checkIsDuplicateNickName(nickNameEntered, 'Customer/CheckIsDuplicateNickName')
           .subscribe((data: boolean) => {
           this.isDuplicateNickName = data;
@@ -235,5 +236,10 @@ export class CustomerInfoComponent implements OnInit {
       let firstElement = <any>this.customerForm.get(Object.keys(this.customerForm.controls)[index]);
       if (firstElement.nativeElement) firstElement.nativeElement.focus();
     }
+
+    isNullOrWhiteSpace(value: string) {
+      if (value == null || value == undefined || value == '') return true;    
+      return value.replace(/\s/g, '').length == 0;
+    }  
   
   }

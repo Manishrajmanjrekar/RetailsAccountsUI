@@ -102,7 +102,7 @@ export class VendorService {
 
   public checkIsDuplicateNickName(data: string, url: string): any {
     console.log(this.APIEndpoint + url);
-    return this.httpClient.post(this.APIEndpoint + url, data, httpOptions);
+    return this.httpClient.post(this.APIEndpoint + url, JSON.stringify(data), httpOptions);
   }
 
   public saveVendor(data: VendorsModel, url: string): any {
@@ -112,7 +112,7 @@ export class VendorService {
 
   public getVendor(url: string): any {
     console.log(this.APIEndpoint + url);
-    return this.httpClient.get(this.APIEndpoint + url);
+    return this.httpClient.post(this.APIEndpoint + url, httpOptions);
   }
 
   public getStockIn_LoadNumberCount(url: string, vendorId: number, nickName: string): any {
@@ -155,7 +155,7 @@ export class VendorService {
 
   public getVendorList(url: string): any {
     console.log(this.APIEndpoint + url);
-    return this.httpClient.get(this.APIEndpoint + url);
+    return this.httpClient.post(this.APIEndpoint + url, httpOptions);
   }
 
 }
