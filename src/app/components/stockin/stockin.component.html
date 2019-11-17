@@ -1,74 +1,79 @@
-
-
 <div class="jumbotron">
   <div class="container">
-      <div class="row">
-          <div class="col-md-6 offset-md-3">
-              <h3>StockIn</h3>
-              <div class="form-group">
+    <div *ngIf="stockinForm" class="row">
+        <div class="col-md-6 offset-md-3">
+            <h3>{{stockinId > 0 ? 'Edit' : 'Add'}} StockIn</h3>
+            <div class="form-group">
                   <mat-form-field>
                       <input [formControl]="autoCompleteControl" type="text" placeholder="Select Vendor"
-                       aria-label="Number" matInput [matAutocomplete]="auto">
+                       aria-label="Number" matInput [matAutocomplete]="auto" />
                       <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" >
                             <!-- (optionSelected)="SelectedOption($event)" -->
                         <mat-option   *ngFor="let item of githubAutoComplete$ | async; let index = index" (onSelectionChange)="SelectedOption(item)" [value]="item.firstName">
                           {{ item.firstName | titlecase}}
                         </mat-option>
                       </mat-autocomplete>
-                    </mat-form-field>
+                    </mat-form-field>                    
+            </div>         
+        
+            <form [formGroup]="stockinForm" (ngSubmit)="onSubmit()">
+                
+                <!-- <div class="form-group">
+                    <label>Vendor</label>
+                    <select formControlName="vendor" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.vendor.errors }">
+                    <option value="" selected >-- Select Vendor --</option>
+                    <option *ngFor="let item of vendorList" [value]="item.id" >{{item.name}}</option>
+                    </select>
+                    <div *ngIf="submitted && f.vendor.errors" class="invalid-feedback">
+                        <div *ngIf="f.vendor.errors.required">Vendor is required</div>
+                    </div>
+                </div> -->
 
-                    
+                <div class="form-group">
+                    <input type="text" formControlName="nickName" placeholder="nick Name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.nickName.errors }"
+                        [attr.disabled] = "stockinId > 0 ? 'disabled' : null" />
+                    <div *ngIf="submitted && f.nickName.errors" class="invalid-feedback">
+                        <div *ngIf="f.nickName.errors.required">Nick Name is required</div>
+                    </div>
                 </div>
-<div>
-    
-</div>
-              <form [formGroup]="stockinForm" (ngSubmit)="onSubmit()">
-                    
-                  <!-- <div class="form-group">
-                      <label>Vendor</label>
-                      <select formControlName="vendor" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.vendor.errors }">
-                        <option value="" selected >-- Select Vendor --</option>
-                        <option *ngFor="let item of vendorList" [value]="item.id" >{{item.name}}</option>
-                      </select>
-                      <div *ngIf="submitted && f.vendor.errors" class="invalid-feedback">
-                          <div *ngIf="f.vendor.errors.required">Vendor is required</div>
-                      </div>
-                  </div> -->
-                  <div class="form-group">
-                      <!--<label>Simple Name</label>-->
-                      <input type="text" formControlName="NickName" placeholder="nick Name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.NickName.errors }" />
-                      <div *ngIf="submitted && f.NickName.errors" class="invalid-feedback">
-                          <div *ngIf="f.NickName.errors.required">Nick Name is required</div>
-                      </div>
-                  </div>
-                  <div class="form-group">
-                    <!--<label>Created Date</label>-->
+
+                <div class="form-group">
+                    <input type="text" formControlName="loadName" placeholder="load Name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.loadName.errors }" 
+                        [attr.disabled] = "stockinId > 0 ? 'disabled' : null" />                    
+                    <div *ngIf="submitted && f.loadName.errors" class="invalid-feedback">
+                        <div *ngIf="f.loadName.errors.required">load Name is required</div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
                     <input type="date" onfocus="(this.type='date')" onblur="(this.type='text')" formControlName="createdDate" placeholder="Created Date"class="form-control" [ngClass]="{ 'is-invalid': submitted && f.createdDate.errors }" />
                     <div *ngIf="submitted && f.createdDate.errors" class="invalid-feedback">
                         <div *ngIf="f.createdDate.errors.required">Created Date is required</div>
                     </div>
                 </div>
+
                 <div class="form-group">
-                    <!--<label>Total Count</label>-->
-                    <input type="number" formControlName="TotalQuantity" placeholder="Total Count" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.TotalQuantity.errors }" />
-                    <div *ngIf="submitted && f.TotalQuantity.errors" class="invalid-feedback">
-                        <div *ngIf="f.TotalQuantity.errors.required">Total Count is required</div>
-                        <div *ngIf="f.TotalQuantity.errors.min">Invalid Total Count</div>
+                    <input type="number" formControlName="totalQuantity" placeholder="Total Count" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.totalQuantity.errors }" />
+                    <div *ngIf="submitted && f.totalQuantity.errors" class="invalid-feedback">
+                        <div *ngIf="f.totalQuantity.errors.required">Total Count is required</div>
+                        <div *ngIf="f.totalQuantity.errors.min">Invalid Total Count</div>
                     </div>
                 </div>
-                <div class="form-group">
-                        <!--<label>Total Count</label>-->
-                        <input type="text" formControlName="loadName" placeholder="load Name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.loadName.errors }" />
-                        
-                      <div *ngIf="submitted && f.loadName.errors" class="invalid-feedback">
-                          <div *ngIf="f.loadName.errors.required">loadName Name is required</div>
-                      </div>
-                    </div>
+                
                 <div class="form-group">
                     <button class="btn btn-primary">Submit</button>
                 </div>
-              </form>
-          </div>
-      </div>
+            </form>
+        </div>
+    </div>
+
+    <div [class.hideMsg]="!showMsg" class="msgTransition">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-info" role="alert" [innerHtml]="msg">
+                </div>
+            </div>
+        </div>
+    </div>
   </div>
 </div>

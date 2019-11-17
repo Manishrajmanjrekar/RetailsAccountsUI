@@ -176,10 +176,10 @@ export class VendorComponent implements OnInit {
     this.vendorDetails = <VendorsModel>(this.vendorForm.value);
     this.vendorDetails.id = this.vendorId;
     let postUrl = 'Vendor/SaveVendor';
-    if (this.vendorId > 0)
-    {
-      postUrl = 'Vendor/UpdateVendor'
-    }
+    // if (this.vendorId > 0)
+    // {
+    //   postUrl = 'Vendor/UpdateVendor'
+    // }
 
     this._vendorService.saveVendor(this.vendorDetails, postUrl)
       .subscribe((response: UIModel.ResponseInfo) => {
@@ -194,7 +194,7 @@ export class VendorComponent implements OnInit {
         } else {
           this.showMsgAlert('Failed to save Vendor details. Please try again.', 2000);
         }
-      })
+      }, error => console.error(error)); 
   }
 
 

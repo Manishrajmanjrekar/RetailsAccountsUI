@@ -148,10 +148,10 @@ export class CustomerInfoComponent implements OnInit {
       this.customerDetails.id = this.customerId;
 
       let postUrl = 'Customer/SaveCustomer';
-      if (this.customerId > 0)
-      {
-        postUrl = 'Customer/UpdateCustomer'
-      }
+      // if (this.customerId > 0)
+      // {
+      //   postUrl = 'Customer/UpdateCustomer'
+      // }
   
       this._customerService.saveCustomer(this.customerDetails, postUrl)
         .subscribe((response: UIModel.ResponseInfo) => {
@@ -166,7 +166,7 @@ export class CustomerInfoComponent implements OnInit {
           } else {
             this.showMsgAlert('Failed to save Customer details. Please try again.', 2000);
           }
-        })
+        }, error => console.error(error)); 
     }  
   
     getCustomerDetails() {

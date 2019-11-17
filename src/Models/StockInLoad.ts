@@ -13,3 +13,18 @@ export class StockInLoad
   CreatedDate?: string;
  
 }
+
+export class StockInModel
+{
+    id: number;
+    vendorId: number;
+    loadName: string;
+    totalQuantity: number;    
+    isActive: boolean;
+    createdDate: Date;
+
+    nickName: string;
+    firstName:string;
+    formattedCreatedDate: string;
+    formattedModifiedDate: string;
+}

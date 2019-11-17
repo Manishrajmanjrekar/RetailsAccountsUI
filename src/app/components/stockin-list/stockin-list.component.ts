@@ -8,43 +8,43 @@ import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import { ActivatedRoute, Router } from '@angular/router';
+import { StockinService } from 'Services/stockin.service';
+import { StockInModel } from 'Models/StockInLoad';
+
 @Component({
   selector: 'app-stockin-list',
   templateUrl: './stockin-list.component.html',
   styleUrls: ['./stockin-list.component.css']
 })
 export class StockinListComponent implements OnInit {
+  _stockInService: StockinService;
   public searchForm: FormGroup;
   public submitted = false;
+  allStockIns: StockInModel[];
   // public dataSource: StockinInfo[];
   public displayColInfo: any[];
   // displayedColumns = ['position', 'name', 'weight', 'symbol'];
   // dataSource = new MatTableDataSource<Element>(ELEMENT_DATA);
 
-  displayedColumns = ['stockinId', 'createdDate', 'simpleName', 'vendor', 'action'];
-  dataSource = new MatTableDataSource<StockinInfo>(Stockins);
-
-
-
+  //displayedColumns = ['stockinId', 'createdDate', 'simpleName', 'vendor', 'action'];
+  displayedColumns = ['id', 'formattedCreatedDate', 'loadName', 'nickName', 'totalQuantity', 'action'];
+  dataSource = new MatTableDataSource<StockInModel>(this.allStockIns);
+  
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private fb: FormBuilder, private activatedRoute: ActivatedRoute, private router: Router) {
+  constructor(private fb: FormBuilder, private activatedRoute: ActivatedRoute, private router: Router, private stockInService: StockinService) {
+    this._stockInService = stockInService;
     console.log('displayedColumns' + this.displayedColumns);
     console.log('dataSource' + this.dataSource);
-
   }
 
   UpdateData(id) {
     // this.activatedRoute.url ='../stockin/?id=id';
-    this.router.navigate(['/../stockin/id?=', { id }]);
-    console.log('UpdateData' + id);
-
-    if (id > 0) {
-      // Get the data from the api and load the form group....
-
-    }
+    //this.router.navigate(['/../stockin/id?=', { id }]);
+    this.router.navigate(['stockin/' + id]);
+    console.log('UpdateData ' + id);
   }
 
   ngOnInit() {
@@ -56,7 +56,12 @@ export class StockinListComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
 
-
+    this._stockInService.getStockInList('StockIn/GetAllStock')
+    .subscribe((result: StockInModel[]) => {
+      console.log('fetched unfiltered list successfully');
+      this.allStockIns = result;
+      this.dataSource = new MatTableDataSource<StockInModel>(this.allStockIns);
+    }, error => console.error(error));
   }
   // tslint:disable-next-line:use-life-cycle-interface
   ngAfterViewInit() {

@@ -1,36 +1,39 @@
-
-
+<div class="jumbotron">
 <div class="example-container mat-elevation-z8">
     <mat-table #table [dataSource]="dataSource">
   
     
-      <ng-container matColumnDef="stockinId">
+      <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.stockinId}} </mat-cell>
+        <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
       </ng-container>
   
      
-      <ng-container matColumnDef="createdDate">
-        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.createdDate}} </mat-cell>
+      <ng-container matColumnDef="formattedCreatedDate">
+        <mat-header-cell *matHeaderCellDef> CreatedDate </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.formattedCreatedDate}} </mat-cell>
       </ng-container>
   
      
-      <ng-container matColumnDef="simpleName">
-        <mat-header-cell *matHeaderCellDef> Weight </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.simpleName}} </mat-cell>
+      <ng-container matColumnDef="loadName">
+        <mat-header-cell *matHeaderCellDef> loadName </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.loadName}} </mat-cell>
       </ng-container>
-  
-      
-      <ng-container matColumnDef="vendor">
-        <mat-header-cell *matHeaderCellDef> Symbol </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.vendor}} </mat-cell>
+        
+      <ng-container matColumnDef="nickName">
+        <mat-header-cell *matHeaderCellDef> nickName </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.nickName}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="totalQuantity">
+        <mat-header-cell *matHeaderCellDef> totalQuantity </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.totalQuantity}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="action">
           <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
             <mat-cell *matCellDef="let element" fxLayoutGap="5px"> 
-                <button mat-mini-fab color="primary" (click)="UpdateData(element.stockinId)"  ><mat-icon>edit</mat-icon>
+                <button mat-mini-fab color="primary" (click)="UpdateData(element.id)"  ><mat-icon>edit</mat-icon>
                  
                 </button>
                 <!-- <a href="../stockin/?id={{element.stockinId}}" >Update</a> 
@@ -48,4 +51,4 @@
                    [pageSizeOptions]="[5, 10, 20]">
     </mat-paginator>
   </div>
-  
+</div>

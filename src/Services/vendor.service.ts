@@ -1,3 +1,4 @@
+import { StockInModel } from 'Models/StockInLoad';
 import { Injectable } from '@angular/core';
 
 import { Component, OnInit } from '@angular/core';
@@ -115,10 +116,8 @@ export class VendorService {
     return this.httpClient.post(this.APIEndpoint + url, httpOptions);
   }
 
-  public getStockIn_LoadNumberCount(url: string, vendorId: number, nickName: string): any {
-    const data = JSON.stringify({ Id: vendorId, NickName: nickName });
+  public getStockIn_LoadNumberCount(url: string, data: StockInModel): any {
     return this.httpClient.post(this.APIEndpoint + url, data, httpOptions);
-
   }
 
   public getSalesByStockId(url: string, stockInId: string): any {
@@ -134,23 +133,6 @@ export class VendorService {
 
     console.log(this.APIEndpoint + url + ' getExpensesByStockId:-' + data)
     return this.httpClient.post(this.APIEndpoint + url, data, httpOptions);
-  }
-
-
-
-  public AddStock(url: string, data: string) {
-    console.log(this.APIEndpoint + url + ' AddStock')
-    this.httpClient.post(this.APIEndpoint + url, data, httpOptions).subscribe(res => {
-      console.log('AddStock-----Success');
-      // console.log('res ' + this.test.firstName);
-
-
-    }, (err: HttpErrorResponse) => {
-      console.log(err.error);
-      console.log(err.name);
-      console.log(err.message);
-      console.log(err.status);
-    });
   }
 
   public getVendorList(url: string): any {
