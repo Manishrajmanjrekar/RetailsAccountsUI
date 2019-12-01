@@ -85,6 +85,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'customerlist',     component: CustomerListComponent },
     { path: 'stockin-list',     component: StockinListComponent },
     { path: 'expensescategory',     component: ExpensesCategoryComponent },
+    { path: 'expensescategory/:id',     component: ExpensesCategoryComponent },
     { path: 'expensescategorylist', component: ExpensesCategoryListComponent },
     { path: 'vendorpayment',     component: VendorpaymentComponent },
     { path: 'customerpayment', component: CustomerpaymentComponent },

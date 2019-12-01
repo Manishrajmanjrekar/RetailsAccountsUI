@@ -17,8 +17,8 @@ const httpOptions = {
   styleUrls: ['./expenses-category.component.css']
 })
 export class ExpensesCategoryComponent implements OnInit {ng  
-expensesTypeId_Vendor: number = UIModel.ExpensesTypeEnum.Vendor;
-expensesTypeId_CommissionAgent: number = UIModel.ExpensesTypeEnum.CommissionAgent;
+expenseTypeId_Vendor: number = UIModel.ExpensesTypeEnum.Vendor;
+expenseTypeId_CommissionAgent: number = UIModel.ExpensesTypeEnum.CommissionAgent;
 
     expensesCategoryForm: FormGroup;
     submitted = false;
@@ -54,7 +54,7 @@ expensesTypeId_CommissionAgent: number = UIModel.ExpensesTypeEnum.CommissionAgen
       };    
 
       console.log('getting expenses types..');
-      this._commonService.get('ExpensesTypes')
+      this._commonService.postUrl('Expense/GetExpenseTypes')
       .subscribe((result: UIModel.ExpensesTypeModel[]) => {
         console.log('fetched ExpensesTypes successfully');      
         this.expensesTypes = result;
@@ -104,7 +104,7 @@ expensesTypeId_CommissionAgent: number = UIModel.ExpensesTypeEnum.CommissionAgen
 
       this.expensesCategoryForm = this.formBuilder.group({
         name: [this.expensesCategoryDetails.name, Validators.required],
-        expensesTypeId: [this.defaultExpenseTypeId > 0 ? this.defaultExpenseTypeId : '', Validators.required]
+        expenseTypeId: [this.expensesCategoryDetails.expenseTypeId > 0 ? this.expensesCategoryDetails.expenseTypeId : '', Validators.required]
       });
 
       setTimeout(() => {      
@@ -139,7 +139,7 @@ expensesTypeId_CommissionAgent: number = UIModel.ExpensesTypeEnum.CommissionAgen
       this.expensesCategoryDetails = <UIModel.ExpensesCategoryModel>(this.expensesCategoryForm.value);
       this.expensesCategoryDetails.id = this.expensesCategoryId;
       
-      this._commonService.post(this.expensesCategoryDetails, 'ExpensesCategory/SaveExpensesCategory')
+      this._commonService.post(this.expensesCategoryDetails, 'Expense/SaveExpense')
       .subscribe((response: UIModel.ResponseInfo) => {
         console.log('response', response);
         console.log(response.isSuccess);
@@ -157,7 +157,7 @@ expensesTypeId_CommissionAgent: number = UIModel.ExpensesTypeEnum.CommissionAgen
   
     getExpensesCategoryDetails() {
       if (this.expensesCategoryId > 0) {
-        this._commonService.get('ExpensesCategory/' + this.expensesCategoryId)
+        this._commonService.postUrl('Expense/GetExpenseById?id=' + this.expensesCategoryId)
           .subscribe((result: UIModel.ExpensesCategoryModel) => {
             this.expensesCategoryDetails = result;
   
@@ -186,17 +186,17 @@ expensesTypeId_CommissionAgent: number = UIModel.ExpensesTypeEnum.CommissionAgen
     checkIsDuplicateName() {
       console.log('checkIsDuplicateName raised');
       let nameEntered: string = this.expensesCategoryForm.value.name;
-      let filterExpensesTypeId = Number(this.expensesCategoryForm.value.expensesTypeId);
+      let filterexpenseTypeId = Number(this.expensesCategoryForm.value.expenseTypeId);
       console.log(nameEntered);
 
-      if (nameEntered != null && nameEntered.length > 0 && filterExpensesTypeId > 0) {
+      if (nameEntered != null && nameEntered.length > 0 && filterexpenseTypeId > 0) {
         const inputData = {
           name: nameEntered,
-          expensesTypeId: filterExpensesTypeId,
+          expenseTypeId: filterexpenseTypeId,
           id: this.expensesCategoryId
         }
         var jsonInput = JSON.stringify(inputData);
-        this._commonService.post(jsonInput, 'ExpensesCategory/CheckIsDuplicate')
+        this._commonService.post(jsonInput, 'Expense/CheckIsDuplicate')
           .subscribe((data: boolean) => {
           this.isDuplicateName = data;
             console.log(this.isDuplicateName);

@@ -19,7 +19,7 @@ export namespace UIModel {
 
     export class ExpensesCategoryModel{
       id: number;
-      expensesTypeId: number;
+      expenseTypeId: number;
       name: string;      
 
       createdDate?: string;
@@ -27,7 +27,7 @@ export namespace UIModel {
       modifiedDate?: string;
       modifiedBy?: string;
 
-      expensesTypeName?: string;
+      expenseTypeName?: string;
       url?: string;
     };
 
@@ -41,13 +41,4 @@ export namespace UIModel {
       {id:2, name:'Commission Agent'}
     ]
 
-    export const ExpensesCategories: ExpensesCategoryModel[] = [
-      {id:1, name:'a01', expensesTypeId: 1, expensesTypeName: 'Vendor' },
-      {id:2, name:'a02', expensesTypeId: 1, expensesTypeName: 'Vendor'},
-      {id:3, name:'a03', expensesTypeId: 1, expensesTypeName: 'Vendor'},
-
-      {id:10, name:'B01', expensesTypeId: 2, expensesTypeName: 'Commission Agent'},
-      {id:11, name:'B02', expensesTypeId: 2, expensesTypeName: 'Commission Agent'},
-      {id:12, name:'B03', expensesTypeId: 2, expensesTypeName: 'Commission Agent'},
-    ]
   }

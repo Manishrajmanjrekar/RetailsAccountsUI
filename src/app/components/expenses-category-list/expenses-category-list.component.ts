@@ -9,7 +9,7 @@ import { UIModel } from 'Models/UIModel';
   styleUrls: ['./expenses-category-list.component.css']
 })
 export class ExpensesCategoryListComponent implements OnInit {
-  @Input() inExpensesTypeId: number = 0;
+  @Input() inexpenseTypeId: number = 0;
   @Input() inIsChildComponet: boolean = false;
   
   _commonService: CommonService;
@@ -27,16 +27,16 @@ export class ExpensesCategoryListComponent implements OnInit {
   ngOnInit() {
     this.searchForm = this.fb.group({
       expensesCategoryName: [''],
-      expensesTypeId: [this.inExpensesTypeId > 0 ? this.inExpensesTypeId : '']
+      expenseTypeId: [this.inexpenseTypeId > 0 ? this.inexpenseTypeId : '']
     });
 
     this.displayColInfo = [
-      { field: 'name', header: 'Expenses Category' },
-      { field: 'expensesTypeName', header: 'Expenses Type'},
+      { field: 'name', header: 'Expense Category'}, //, hyperlinkField: 'url' },
+      { field: 'expenseTypeName', header: 'Expenses Type'},
     ];
 
     console.log('getting expenses types..');
-    this._commonService.get('ExpensesTypes')
+    this._commonService.postUrl('Expense/GetExpenseTypes')
     .subscribe((result: UIModel.ExpensesTypeModel[]) => {
       console.log('fetched ExpensesTypes successfully');      
       this.expensesTypes = result;
@@ -48,7 +48,7 @@ export class ExpensesCategoryListComponent implements OnInit {
   get f(){ return this.searchForm.controls};
 
   getExpensesCategories() {
-    this._commonService.get('expensescategory')
+    this._commonService.postUrl('Expense/GetAllExpenses')
     .subscribe((result: UIModel.ExpensesCategoryModel[]) => {
       console.log('fetched unfiltered list successfully'); 
       this.allExpensesCategories = result;  
@@ -75,20 +75,20 @@ export class ExpensesCategoryListComponent implements OnInit {
     this.dataSource =  this.allExpensesCategories;
     // filter data
     let filterVal = this.searchForm.value.expensesCategoryName;
-    let filterExpensesTypeId = this.searchForm.value.expensesTypeId;
+    let filterexpenseTypeId = this.searchForm.value.expenseTypeId;
     if (filterVal != undefined && filterVal != '') {
       this.dataSource =  this.dataSource.filter(
         item => (item.name.toLowerCase().indexOf(filterVal.toLowerCase()) !== -1)
       )};
 
-    if (filterExpensesTypeId > 0) {
+    if (filterexpenseTypeId > 0) {
       this.dataSource =  this.dataSource.filter(
-        item => item.expensesTypeId == filterExpensesTypeId
+        item => item.expenseTypeId == filterexpenseTypeId
       )
     };  
       
     console.log(filterVal);
-    console.log(filterExpensesTypeId);
+    console.log(filterexpenseTypeId);
     console.log('filtered list..');
   }
 }

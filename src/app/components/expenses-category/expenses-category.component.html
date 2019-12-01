@@ -6,19 +6,19 @@
         <form [formGroup]="expensesCategoryForm" (ngSubmit)="onSubmit()">
             <div class="form-group">
                 <mat-form-field>
-                  <mat-select [attr.data-name]="'expensesTypeId'" [formControlName]="'expensesTypeId'" placeholder="Select Expenses Type">
+                  <mat-select [attr.data-name]="'expenseTypeId'" [formControlName]="'expenseTypeId'" placeholder="Select Expenses Type">
                       <!-- <mat-option [value]="">-- Select Expenses Type --</mat-option> -->
                     <mat-option *ngFor="let item of expensesTypes" [value]="item.id">
                       {{item.name}}
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
-                <!-- <select formControlName="expensesTypeId" class="form-control">
+                <!-- <select formControlName="expenseTypeId" class="form-control">
                   <option value="">-- Select Expenses Type --</option>
                   <option *ngFor="let item of expensesTypes" [value]="item.id" >{{item.name}}</option>
                 </select>
-                <div *ngIf="submitted && f.expensesTypeId.errors" class="invalid-feedback">
-                  <div *ngIf="f.expensesTypeId.errors.required">Expenses Type is required</div>
+                <div *ngIf="submitted && f.expenseTypeId.errors" class="invalid-feedback">
+                  <div *ngIf="f.expenseTypeId.errors.required">Expenses Type is required</div>
                 </div> -->
               </div>
 
@@ -56,14 +56,14 @@
     <div class="col-md-6">
       <div class="border border-primary">
         <h5>Expenses Categories - Vendor</h5>
-        <app-expenses-category-list [inExpensesTypeId]="expensesTypeId_Vendor"></app-expenses-category-list>
+        <app-expenses-category-list [inexpenseTypeId]="expenseTypeId_Vendor"></app-expenses-category-list>
       </div>
     </div>
 
     <div class="col-md-6">
       <div class="border border-primary">
         <h5>Expenses Categories - Commission Agent</h5>
-        <app-expenses-category-list [inExpensesTypeId]="expensesTypeId_CommissionAgent"></app-expenses-category-list>
+        <app-expenses-category-list [inexpenseTypeId]="expenseTypeId_CommissionAgent"></app-expenses-category-list>
       </div>
     </div>
   </div> -->
@@ -71,7 +71,7 @@
   <div class="col-md-12">
     <div class="border border-primary p-2">
       <h5>Expenses Categories List</h5>
-      <app-expenses-category-list [inIsChildComponet]="true" [inExpensesTypeId]="expensesTypeId_Vendor"></app-expenses-category-list>
+      <app-expenses-category-list [inIsChildComponet]="true" [inexpenseTypeId]="expenseTypeId_Vendor"></app-expenses-category-list>
     </div>
   </div>
 </div>
